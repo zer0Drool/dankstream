@@ -1,0 +1,62 @@
+* {
+    margin: 0;
+}
+
+html {
+    height: 100vh;
+    width: 100vw;
+}
+
+body {
+    height: 100%;
+    width: 100%;
+    background-color: gray;
+}
+
+h1 {
+    background-color: black;
+    color: white;
+    font-family: 'comic-sans';
+    padding: 10px;
+    width: 70%;
+    margin: 20px auto;
+    text-align: center;
+}
+
+h3 {
+    background-color: black;
+    color: white;
+    font-family: 'comic-sans';
+    padding: 5px;
+    width: 60%;
+    margin: 10px auto;
+    text-align: center;
+}
+
+.divide {
+    width: 90%;
+    height: 6px;
+    background-color: pink;
+    margin: 20px auto;
+}
+
+@keyframes pulse {
+    0% {transform: scale(1);}
+    50% {transform: scale(1.3);}
+    100% {transform: scale(1);}
+}
+
+h4 {
+    color: lime;
+    font-size: 3em;
+    width: 70%;
+    text-align: center;
+    animation: pulse 3s linear infinite;
+    margin: 5px auto;
+}
+
+img {
+    width: 80%;
+    display: block;
+    margin: 30px auto;
+}
