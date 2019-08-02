@@ -11,7 +11,21 @@ app.use(bodyParser.urlencoded({extended: false}));
 app.use(express.static('./public'));
 
 io.on('connection', (socket) => {
-    console.log(socket, ' has joined the party');
+    socket.on('join', data => {
+        socket.join(data.who);
+    });
+
+    socket.on('getRekt', data => {
+        socket.to(data.who).emit('yourRekt');
+    });
+
+    socket.on('fuckYouAll', data => {
+        io.emit('allIsFuked', {who: data.who});
+    });
+
+    socket.on('throwingShade', data => {
+        socket.to(data.who).emit('shadeThrown');
+    });
 });
 
 app.get('/james', (req, res) => {

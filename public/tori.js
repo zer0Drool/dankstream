@@ -1,9 +1,9 @@
 console.log('tori');
 
-window.onerror = function(msg, url, linenumber) {
-    alert('FUCKING ERROR - msg ', msg, ' - url ', url, ' - linenumber ', linenumber);
-    return true;
-}
+// window.onerror = function(msg, url, linenumber) {
+//     alert('FUCKING ERROR - msg ', msg, ' - url ', url, ' - linenumber ', linenumber);
+//     return true;
+// }
 
 if (location.protocol != 'http:') {
     location.href = 'http:' + window.location.href.substring(window.location.protocol.length);
@@ -11,6 +11,29 @@ if (location.protocol != 'http:') {
 
 var socket = io.connect('http://192.168.1.226:8080'); //studio
 
+//declarations
+var tButton = document.getElementById('t-button');
+
 socket.on('connect', function(data) {
-   console.log('socket connected - data ', data);
+   socket.emit('join', {who: 'tori'});
+
+   socket.on('yourRekt', data => {
+       console.log('getting rekt');
+       document.body.classList.add('rekt');
+       setTimeout(() => {
+           document.body.classList.remove('rekt');
+       }, 3100);
+   });
+
+   socket.on('allIsFuked', data => {
+       console.log(data.who, ' pwns all');
+       document.body.classList.add('pwned');
+       setTimeout(() => {
+           document.body.classList.remove('pwned');
+       }, 2100);
+   });
+});
+
+tButton.addEventListener('click', () => {
+    socket.emit('throwingShade', {who: 'tori-master'});
 });
