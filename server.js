@@ -28,6 +28,12 @@ io.on('connection', (socket) => {
     });
 });
 
+function uVizionAdTimer() {
+    io.emit('timeForAd');
+};
+
+setInterval(uVizionAdTimer, 300000);
+
 app.get('/james', (req, res) => {
     res.sendFile(__dirname + '/james.html');
 });

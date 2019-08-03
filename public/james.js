@@ -13,6 +13,7 @@ var socket = io.connect('http://192.168.1.226:8080'); //studio
 
 //declarations
 var jButton = document.getElementById('j-button');
+var uVizAd = document.getElementById('capita');
 
 socket.on('connect', function(data) {
    socket.emit('join', {who: 'james'});
@@ -31,6 +32,13 @@ socket.on('connect', function(data) {
        setTimeout(() => {
            document.body.classList.remove('pwned');
        }, 2100);
+   });
+
+   socket.on('timeForAd', () => {
+       uVizAd.classList.add('adTime');
+       setTimeout(() => {
+           uVizAd.classList.remove('adTime');
+       }, 6000);
    });
 });
 
