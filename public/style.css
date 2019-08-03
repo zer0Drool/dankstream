@@ -67,7 +67,11 @@ body {
 
 #uVizionAd div img {
     position: absolute;
-    animation: 5s linear infinite uVizAd;
+    opacity: 0;
+}
+
+.adTime {
+    animation: 5s linear 1 uVizAd;
 }
 
 h1 {
