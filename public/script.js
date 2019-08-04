@@ -49,5 +49,138 @@ function changeAvatar(who) {
     avatarName.innerText = who;
     avatarHeads[currentlySelected.index].classList.remove('selectedHead');
     avatarHeads[index].classList.add('selectedHead');
-    currentlySelected = {name: who, index: index};
+    new Promise((resolve, reject) => {
+        document.getElementsByTagName('canvas')[0].style.left = '-100vw';
+        setTimeout(() => {
+            if (currentlySelected.name === 'james') {
+                scene.remove(james);
+            } else if (currentlySelected.name === 'grant') {
+                scene.remove(grant);
+            } else if (currentlySelected.name === 'tori') {
+                scene.remove(tori);
+            } else {
+                scene.remove(ian);
+            }
+            console.log('jump to right');
+            document.getElementsByTagName('canvas')[0].style.transition = '';
+            document.getElementsByTagName('canvas')[0].style.left = '100vw';
+            currentlySelected = {name: who, index: index};
+            resolve();
+        }, 450);
+    }).then(() => {
+        setTimeout(() => {
+        if (currentlySelected.name === 'james') {
+            scene.add(james);
+        } else if (currentlySelected.name === 'grant') {
+            scene.add(grant);
+            grant.position.set(-0.3, 1.3, -10);
+        } else if (currentlySelected.name === 'tori') {
+            scene.add(tori);
+            tori.position.set(-0.4, -1, -1);
+        } else {
+            scene.add(ian);
+            ian.position.set(-0.3, -0.85, -0.5);
+        };
+            console.log('pulling left');
+            document.getElementsByTagName('canvas')[0].style.transition = 'left 0.4s linear';
+            document.getElementsByTagName('canvas')[0].style.left = '0';
+        }, 350);
+    });
 }
+
+
+var scene = new THREE.Scene();
+
+var camera = new THREE.PerspectiveCamera( 75, window.innerWidth/window.innerHeight, 0.1, 1000 );
+camera.position.z = 2.5;
+
+var renderer = new THREE.WebGLRenderer({antialias:true, alpha: true});
+document.body.appendChild( renderer.domElement );
+renderer.setClearColor("#fff", 0);
+
+renderer.setSize( window.innerWidth, window.innerHeight );
+// renderer.gammaOutput = true;
+// renderer.gammaFactor = 5.3;
+
+var directionalLight = new THREE.DirectionalLight( 0xffffff, 0.8 );
+directionalLight.position.set(1, 2, 5);
+scene.add( directionalLight );
+
+var james, grant, tori, ian;
+
+var loader = new THREE.OBJLoader();
+
+loader.load(
+	`assets/avatarSelecta/jModel.obj`,
+	function (object) {
+        james = object;
+		scene.add(james);
+        james.position.set(-0.3, -0.7, 0);
+	},
+	function (xhr) {
+		console.log( ( xhr.loaded / xhr.total * 100 ) + '% loaded' );
+	},
+	function (error) {
+		console.log( 'An error happened' );
+	}
+);
+
+loader.load(
+	`assets/avatarSelecta/gModelZ.obj`,
+	function (object) {
+        grant = object;
+	},
+	function (xhr) {
+		console.log( ( xhr.loaded / xhr.total * 100 ) + '% loaded' );
+	},
+	function (error) {
+		console.log( 'An error happened' );
+	}
+);
+
+loader.load(
+	`assets/avatarSelecta/tModel.obj`,
+	function (object) {
+        tori = object;
+	},
+	function (xhr) {
+		console.log( ( xhr.loaded / xhr.total * 100 ) + '% loaded' );
+	},
+	function (error) {
+		console.log( 'An error happened' );
+	}
+);
+
+loader.load(
+	`assets/avatarSelecta/iModel.obj`,
+	function (object) {
+        ian = object;
+	},
+	function (xhr) {
+		console.log( ( xhr.loaded / xhr.total * 100 ) + '% loaded' );
+	},
+	function (error) {
+		console.log( 'An error happened' );
+	}
+);
+
+var render = function () {
+    requestAnimationFrame( render );
+
+    if (james) {
+        james.rotation.y += 0.01;
+    }
+    if (grant) {
+        grant.rotation.y += 0.01;
+    }
+    if (tori) {
+        tori.rotation.y += 0.01;
+    }
+    if (ian) {
+        ian.rotation.y += 0.01;
+    }
+
+    renderer.render(scene, camera);
+};
+
+render();

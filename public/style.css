@@ -95,6 +95,7 @@ canvas {
     height: 75%;
     width: 100%;
     z-index: 1;
+    transition: left 0.4s linear;
 }
 
 #avatarHeads {
