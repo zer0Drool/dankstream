@@ -15,7 +15,8 @@ var uVizAd = document.getElementById('capita');
 var avatarHeads = document.getElementsByClassName('avatarHead');
 var avatarName = document.getElementById('avatarName');
 
-var socket = io.connect('http://192.168.1.226:8080'); //studio
+// var socket = io.connect('http://192.168.1.226:8080'); //studio
+var socket = io.connect('http://192.168.4.1:8080'); //ultraPi
 
 socket.on('connect', function(data) {
    socket.emit('join', {who: 'selecta'});

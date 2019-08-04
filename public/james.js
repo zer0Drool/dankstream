@@ -9,7 +9,8 @@ if (location.protocol != 'http:') {
     location.href = 'http:' + window.location.href.substring(window.location.protocol.length);
 }
 
-var socket = io.connect('http://192.168.1.226:8080'); //studio
+// var socket = io.connect('http://192.168.1.226:8080'); //studio
+var socket = io.connect('http://192.168.4.1:8080'); //ultraPi
 
 //declarations
 var jButton = document.getElementById('j-button');
