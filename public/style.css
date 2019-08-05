@@ -1,5 +1,6 @@
 * {
     margin: 0;
+    font-family: 'Comic Sans MS';
 }
 
 html {
@@ -55,6 +56,44 @@ body {
     100% {transform: translateX(2000px);}
 }
 
+@keyframes initializing {
+    0%   {opacity: 0}
+    50%  {opacity: 0}
+    51%  {opacity: 1}
+    100% {opacity: 1}
+}
+
+#info {
+    position: fixed;
+}
+
+#initializing {
+    color: lime;
+    font-size: 40px;
+    animation: initializing 0.5s infinite;
+}
+
+#avatarName {
+    display: none;
+    font-size: 40px;
+    color: lime;
+}
+
+#terminal {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    justify-content: flex-end;
+    position: fixed;
+    z-index: 1;
+    width: 100%;
+    height: 100%;
+    color: lime;
+    font-size: 40px;
+    overflow: hidden;
+    /* background-color: blue; */
+}
+
 #uVizionAd {
     top: 0;
     position: fixed;
@@ -62,7 +101,8 @@ body {
     width: 100%;
     user-select: none;
     pointer-events: none !important;
-    display: flex;
+    display: none;
+    /* display: flex; */
     justify-content: center;
     align-items: center;
     z-index: 10;
@@ -89,6 +129,7 @@ body {
 
 canvas {
     /* background-color: pink; */
+    display: none;
     position: fixed;
     top: 0;
     left: 0;
@@ -100,42 +141,35 @@ canvas {
 
 #avatarHeads {
     position: fixed;
-    top: 5%;
+    bottom: 0;
     right: 0;
-    display: flex;
+    display: none;
+    /* display: flex; */
     flex-direction: column;
     justify-content: space-around;
     align-items: center;
     height: 50%;
     width: 20%;
-    border: 1px silver solid;
-    border-radius: 20px 5px 5px 40px;
+    /* border-top: 2px lime solid;
+    border-left: 2px lime solid;
+    border-bottom: 2px lime solid; */
+    /* border-radius: 20px 5px 5px 40px; */
     z-index: 2;
 }
 
 .avatarHead {
-    width: 80%;
-}
-
-.selectedHead {
-    animation: 1.4s linear infinite selectedHead;
-}
-
-#avatarNameWrap {
-    position: fixed;
-    bottom: 0;
-    height: 400px;
-    width: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
+    color: lime;
+    font-size: 40px;
+    width: 100%;
+    height: 25%;
+    border-top: 2px solid lime;
+    border-left: 2px solid lime;
 }
 
-#avatarName {
-    font-family: 'Comic Sans MS';
-    font-size: 10em;
-    color: black;
-    text-shadow: -10px -20px  30px yellow;
-    width: 100%;
-    text-align: center;
+.selectedHead {
+    text-decoration: underline;
+    /* animation: initializing 0.5s infinite; */
 }
