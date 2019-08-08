@@ -21,6 +21,8 @@ var avatarName = document.getElementById('avatarName');
 var initializing = document.getElementById('initializing');
 var terminal = document.getElementById('terminal');
 
+var changingAvatar = false;
+
 
 // SOCKETS ===============================================================
 
@@ -183,50 +185,50 @@ var currentlySelected = {
 };
 
 function changeAvatar(who) {
-    var index = who === 'james' ? 0 : who === 'grant' ? 1 : who === 'tori' ? 2 : 3;
-    avatarName.innerText = `< ${who} >`;
-    avatarHeads[currentlySelected.index].classList.remove('selectedHead');
-    avatarHeads[index].classList.add('selectedHead');
-    new Promise((resolve, reject) => {
-        document.getElementsByTagName('canvas')[0].style.left = '-100vw';
-        setTimeout(() => {
+    if (who !== currentlySelected.name) {
+        var index = who === 'james' ? 0 : who === 'grant' ? 1 : who === 'tori' ? 2 : 3;
+        avatarName.innerText = `< ${who} >`;
+        avatarHeads[currentlySelected.index].classList.remove('selectedHead');
+        avatarHeads[index].classList.add('selectedHead');
+        modelCanv.style.left = '-100vw';
+        new Promise((resolve, reject) => {
+            console.log('left');
+            setTimeout(() => {
+                if (currentlySelected.name === 'james') {
+                    scene.remove(james);
+                } else if (currentlySelected.name === 'grant') {
+                    scene.remove(grant);
+                } else if (currentlySelected.name === 'tori') {
+                    scene.remove(tori);
+                } else {
+                    scene.remove(ian);
+                }
+                currentlySelected = {name: who, index: index};
+                resolve();
+            }, 450);
+        }).then(() => {
+            console.log('right');
             if (currentlySelected.name === 'james') {
-                scene.remove(james);
+                scene.add(james);
             } else if (currentlySelected.name === 'grant') {
-                scene.remove(grant);
+                scene.add(grant);
+                grant.position.set(-0.3, 1.3, -10);
             } else if (currentlySelected.name === 'tori') {
-                scene.remove(tori);
+                scene.add(tori);
+                tori.position.set(-0.4, -1, -1);
             } else {
-                scene.remove(ian);
-            }
-            console.log('jump to right');
-            document.getElementsByTagName('canvas')[0].style.transition = '';
-            document.getElementsByTagName('canvas')[0].style.left = '100vw';
-            currentlySelected = {name: who, index: index};
-            resolve();
-        }, 450);
-    }).then(() => {
-        setTimeout(() => {
-        if (currentlySelected.name === 'james') {
-            scene.add(james);
-        } else if (currentlySelected.name === 'grant') {
-            scene.add(grant);
-            grant.position.set(-0.3, 1.3, -10);
-        } else if (currentlySelected.name === 'tori') {
-            scene.add(tori);
-            tori.position.set(-0.4, -1, -1);
-        } else {
-            scene.add(ian);
-            ian.position.set(-0.3, -0.85, -0.5);
-        };
-            console.log('pulling left');
-            document.getElementsByTagName('canvas')[0].style.transition = 'left 0.4s linear';
-            document.getElementsByTagName('canvas')[0].style.left = '0';
-        }, 350);
-    });
+                scene.add(ian);
+                ian.position.set(-0.3, -0.85, -0.5);
+            };
+            modelCanv.style.left = '0';
+        });
+    }
 }
 
 function enterStream() {
     console.log(`entering ${currentlySelected.name}'s stream!'`);
-    window.location.href = `http://192.168.1.226:8080/${currentlySelected.name}`;
+    modelCanv.style.left = '100vw';
+    setTimeout(() => {
+        window.location.href = `http://192.168.1.226:8080/${currentlySelected.name}`;
+    }, 405)
 }

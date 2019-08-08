@@ -13,7 +13,7 @@ var socket = io.connect('http://192.168.1.226:8080'); //studio
 // var socket = io.connect('http://192.168.4.1:8080'); //ultraPi
 
 //declarations
-var jButton = document.getElementById('j-button');
+var jButton = document.getElementsByClassName('interaction')[0];
 var uVizAd = document.getElementById('capita');
 
 socket.on('connect', function(data) {

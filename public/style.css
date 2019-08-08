@@ -1,6 +1,6 @@
 * {
     margin: 0;
-    font-family: 'Comic Sans MS';
+    /* font-family: 'Comic Sans MS'; */
 }
 
 html {
@@ -172,4 +172,8 @@ canvas {
 .selectedHead {
     text-decoration: underline;
     /* animation: initializing 0.5s infinite; */
+}
+
+span {
+    pointer-events: none;
 }

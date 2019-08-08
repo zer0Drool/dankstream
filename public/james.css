@@ -51,29 +51,60 @@
 }
 
 html {
-    height: 100vh;
+    height: 100%;
     width: 100vw;
 }
 
 body {
     height: 100%;
     width: 100%;
-    background-color: coral;
+    background: linear-gradient(black, black, black, purple);
 }
 
-h1 {
-    font-size: 10em;
-    color: blue;
+@keyframes initializing {
+    0%   {opacity: 0}
+    50%  {opacity: 0}
+    51%  {opacity: 1}
+    100% {opacity: 1}
 }
 
-button {
-    height: 300px;
-    width: 300px;
-    border-radius: 100px;
-    font-size: 5em;
-    background-color: silver;
-    color: orange;
-    margin: 50px;
+#info {
+    position: fixed;
+}
+
+#name {
+    color: lime;
+    font-size: 40px;
+    animation: initializing 0.5s infinite;
+}
+
+#buttonWrap {
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    height: 50%;
+    width: 20%;
+    /* border-top: 2px lime solid;
+    border-left: 2px lime solid;
+    border-bottom: 2px lime solid; */
+    /* border-radius: 20px 5px 5px 40px; */
+    z-index: 2;
+}
+
+.interaction {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: lime;
+    font-size: 40px;
+    width: 100%;
+    height: 25%;
+    border-top: 2px solid lime;
+    border-left: 2px solid lime;
 }
 
 #uVizionAd {
