@@ -101,8 +101,7 @@ body {
     width: 100%;
     user-select: none;
     pointer-events: none !important;
-    display: none;
-    /* display: flex; */
+    display: flex;
     justify-content: center;
     align-items: center;
     z-index: 10;

@@ -32,8 +32,8 @@ function uVizionAdTimer() {
     io.emit('timeForAd');
 };
 
-// setInterval(uVizionAdTimer, 300000);
-setInterval(uVizionAdTimer, 10000);
+setInterval(uVizionAdTimer, 300000);
+// setInterval(uVizionAdTimer, 10000);
 
 app.get('/james', (req, res) => {
     res.sendFile(__dirname + '/james.html');

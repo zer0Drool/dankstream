@@ -26,8 +26,8 @@ var changingAvatar = false;
 
 // SOCKETS ===============================================================
 
-var socket = io.connect('http://192.168.1.226:8080'); //studio
-// var socket = io.connect('http://192.168.4.1:8080'); //ultraPi
+// var socket = io.connect('http://192.168.1.226:8080'); //studio
+var socket = io.connect('http://192.168.4.1:8080'); //ultraPi
 
 socket.on('connect', function(data) {
    socket.emit('join', {who: 'selecta'});
@@ -37,10 +37,13 @@ socket.on('connect', function(data) {
    });
 
    socket.on('timeForAd', () => {
-       uVizAd.classList.add('adTime');
-       setTimeout(() => {
-           uVizAd.classList.remove('adTime');
-       }, 6000);
+       if (assetCount === 4) {
+           console.log('ad time');
+           uVizAd.classList.add('adTime');
+           setTimeout(() => {
+               uVizAd.classList.remove('adTime');
+           }, 6000);
+       }
    });
 });
 
@@ -78,7 +81,6 @@ function assetLoaded() {
         modelCanv.style.display = 'block';
         avatarName.style.display = 'block';
         avatarHeadsWrap.style.display = 'block';
-        uVizAd.style.display = 'flex';
         initializing.innerText = 'choose a DANK member';
     }
 }
@@ -229,6 +231,7 @@ function enterStream() {
     console.log(`entering ${currentlySelected.name}'s stream!'`);
     modelCanv.style.left = '100vw';
     setTimeout(() => {
-        window.location.href = `http://192.168.1.226:8080/${currentlySelected.name}`;
+        // window.location.href = `http://192.168.1.226:8080/${currentlySelected.name}`; // gibson
+        window.location.href = `http://192.168.4.1:8080/${currentlySelected.name}`; //ultraPi
     }, 405)
 }
