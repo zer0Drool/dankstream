@@ -22,6 +22,7 @@ var positions = document.getElementsByClassName('position');
 var uVizAd = document.getElementById('capita');
 var leader = document.getElementById('leader');
 var vid = document.getElementsByTagName('video')[0];
+var imgs = document.getElementsByTagName('img');
 
 var totalScore;
 
@@ -56,6 +57,9 @@ socket.on('connect', function(data) {
            for (var j = 0; j < stats.length; j++) {
                if (chaPos[i].name === stats[j].name) {
                    stats[j].position = i + 1;
+                   if (i === 0) {
+                       imgs[j].classList.add('winning');
+                   }
                }
            }
        }
