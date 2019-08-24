@@ -27,7 +27,8 @@ var changingAvatar = false;
 // SOCKETS ===============================================================
 
 // var socket = io.connect('http://192.168.1.226:8080'); //studio
-var socket = io.connect('http://192.168.4.1:8080'); //ultraPi
+// var socket = io.connect('http://192.168.4.1:8080'); //ultraPi
+var socket = io.connect('http://192.168.1.234:8080'); //ts
 
 socket.on('connect', function(data) {
    socket.emit('join', {who: 'selecta'});

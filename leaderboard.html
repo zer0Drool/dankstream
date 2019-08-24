@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+    <head>
+        <meta charset="utf-8">
+        <title>leaderboard</title>
+        <link rel="stylesheet" href="leaderboard.css">
+    </head>
+    <body>
+
+        <h1 id="leader"></h1>
+
+        <div id="graph">
+            <div class="bar-wrap">
+                <div class="bar"><img src="media/wotsit.png"></div>
+            </div>
+            <div class="bar-wrap">
+                <div class="bar"><img src="media/wotsit.png"></div>
+            </div>
+            <div class="bar-wrap">
+                <div class="bar"><img src="media/wotsit.png"></div>
+            </div>
+            <div class="bar-wrap">
+                <div class="bar"><img src="media/wotsit.png"></div>
+            </div>
+        </div>
+
+        <div id="data">
+            <div id="dead-boy">
+                <p>Dead Boy the Kid</p>
+                <!-- <p>hits: <span class="hits"></span></p> -->
+                <p>viewers: <span class="viewers"></span></p>
+                <p>score: <span class="score"></span></p>
+                <h2 class="position"></h2>
+            </div>
+            <div id="nugget-lord">
+                <p>Nugget Lord</p>
+                <!-- <p>hits: <span class="hits"></span></p> -->
+                <p>viewers: <span class="viewers"></span></p>
+                <p>score: <span class="score"></span></p>
+                <h2 class="position"></h2>
+            </div>
+            <div id="prawn-boy">
+                <p>Prawn Boy</p>
+                <!-- <p>hits: <span class="hits"></span></p> -->
+                <p>viewers: <span class="viewers"></span></p>
+                <p>score: <span class="score"></span></p>
+                <h2 class="position"></h2>
+            </div>
+            <div id="worm-person">
+                <p>Worm Person</p>
+                <!-- <p>hits: <span class="hits"></span></p> -->
+                <p>viewers: <span class="viewers"></span></p>
+                <p>score: <span class="score"></span></p>
+                <h2 class="position"></h2>
+            </div>
+        </div>
+
+        <img id="prawn" src="media/prawn_boy.png">
+        <img id="nugget" src="media/nugget_lord.png">
+
+        <video src="media/prawn_boy.mp4" loop></video>
+
+        <div id="uVizionAd">
+            <div>
+                <img id="capita" src="./assets/avatarSelecta/uviz.png" alt="uVizion">
+            </div>
+        </div>
+
+        <script src="/socket.io/socket.io.js"></script>
+        <script src="leaderboard.js"></script>
+    </body>
+</html>

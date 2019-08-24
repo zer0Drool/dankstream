@@ -10,10 +10,58 @@ app.use(bodyParser.urlencoded({extended: false}));
 
 app.use(express.static('./public'));
 
+var stats = [
+    {
+        name: 'Dead Boy the Kid',
+        hits: 0,
+        time: 0,
+        viewers: 0,
+        score: 0
+    },
+    {
+        name: 'Nugget Lord',
+        hits: 0,
+        time: 0,
+        viewers: 0,
+        score: 0
+    },
+    {
+        name: 'Prawn Boy',
+        hits: 0,
+        time: 0,
+        viewers: 0,
+        score: 0
+    },
+    {
+        name: 'Worm Person',
+        hits: 0,
+        time: 0,
+        viewers: 0,
+        score: 0
+    }
+]
+
 io.on('connection', (socket) => {
     socket.on('join', data => {
-        socket.join(data.who);
+        console.log(data.who);
+        if (data.who < 4) {
+            socket.dankRoom = data.who;
+            socket.join(data.who);
+            stats[data.who].hits += 1;
+            stats[data.who].viewers += 1;
+            stats[data.who].score += ((stats[data.who].hits * stats[data.who].viewers) / 10);
+            console.log(stats[data.who]);
+            io.emit('updateScore', stats);
+        }
     });
+
+    socket.on('disconnect', () => {
+        console.log('DANK ROOOOM', socket.dankRoom);
+        if (socket.dankRoom) {
+            stats[socket.dankRoom].viewers -= 1;
+            io.emit('updateScore', stats);
+        }
+    })
 
     socket.on('getRekt', data => {
         socket.to(data.who).emit('yourRekt');
@@ -35,38 +83,41 @@ function uVizionAdTimer() {
 setInterval(uVizionAdTimer, 300000);
 // setInterval(uVizionAdTimer, 10000);
 
-app.get('/james', (req, res) => {
-    res.sendFile(__dirname + '/james.html');
+app.get('/deadboythekid', (req, res) => {
+    res.sendFile(__dirname + '/deadboythekid.html');
 });
 
-app.get('/tori', (req, res) => {
-    res.sendFile(__dirname + '/tori.html');
+app.get('/wormperson', (req, res) => {
+    res.sendFile(__dirname + '/wormperson.html');
 });
 
-app.get('/grant', (req, res) => {
-    res.sendFile(__dirname + '/grant.html');
+app.get('/prawnboy', (req, res) => {
+    res.sendFile(__dirname + '/prawnboy.html');
 });
 
-app.get('/ian', (req, res) => {
-    res.sendFile(__dirname + '/ian.html');
+app.get('/nuggetlord', (req, res) => {
+    res.sendFile(__dirname + '/nuggetlord.html');
 });
 
-app.get('/james-master', (req, res) => {
-    res.sendFile(__dirname + '/james-master.html');
+app.get('/dbtk-m', (req, res) => {
+    res.sendFile(__dirname + '/dbtk-m.html');
 });
 
-app.get('/tori-master', (req, res) => {
-    res.sendFile(__dirname + '/tori-master.html');
+app.get('/wp-m', (req, res) => {
+    res.sendFile(__dirname + '/wp-m.html');
 });
 
-app.get('/grant-master', (req, res) => {
-    res.sendFile(__dirname + '/grant-master.html');
+app.get('/pb-m', (req, res) => {
+    res.sendFile(__dirname + '/pb-m.html');
 });
 
-app.get('/ian-master', (req, res) => {
-    res.sendFile(__dirname + '/ian-master.html');
+app.get('/nl-m', (req, res) => {
+    res.sendFile(__dirname + '/nl-m.html');
 });
 
+app.get('/leaderboard', (req, res) => {
+    res.sendFile(__dirname + '/leaderboard.html');
+});
 
 app.get('/', (req, res) => {
     res.sendFile(__dirname + '/index.html');
