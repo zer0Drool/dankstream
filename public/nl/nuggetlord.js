@@ -29,7 +29,6 @@ var sounds = document.getElementsByTagName('audio');
 // var hot = new Audio('audio/hot.mp3');
 // var sexy = new Audio('audio/sexy.mp3');
 // sounds.push(bff, blood, eww, heave, hot, sexy);
-console.log(sounds);
 
 messages.style.height = `${window.innerHeight - write.offsetHeight}px`;
 
@@ -100,8 +99,6 @@ var parisObjs = [];
 var parisLoader = 0;
 var parisLoaded = false;
 
-console.log(parisImgDims[20]);
-
 for (var i = 0; i < 50; i++) {
     parisSrcs.push(`nl/paris_bomb/paris ${i + 1}.jpg`);
     var parisObj = new Image();
@@ -110,31 +107,22 @@ for (var i = 0; i < 50; i++) {
         parisLoader++;
         if (parisLoader === 49) {
             parisLoaded = true;
-            console.log('bomb ready');
         }
     }
     parisObjs.push(parisObj);
 }
 
-var socket = io.connect('http://192.168.1.234:8080'); //ts
+// var socket = io.connect('http://192.168.1.234:8080'); //ts
+var socket = io.connect('http://172.20.10.2:8080'); //salazar
 // var socket = io.connect('http:///172.20.10.3:8080'); //harlesden
 
 // var tButton = document.getElementById('t-button');
 var uVizAd = document.getElementById('capita');
 
 socket.on('connect', () => {
-
     socket.emit('join', {who: 4});
 
-    socket.on('yourRekt', data => {
-        console.log('getting rekt');
-        document.body.classList.add('rekt');
-        setTimeout(() => {
-            document.body.classList.remove('rekt');
-        }, 3100);
-    });
-
-    socket.on('allIsFuked', data => {
+    socket.on('nuked', data => {
         console.log(data.who, ' pwns all');
         document.body.classList.add('pwned');
         setTimeout(() => {
@@ -158,14 +146,11 @@ socket.on('connect', () => {
     // });
 
     name = boyfs[Math.floor(Math.random() * ((boyfs.length - 1) - 0 + 1)) + 0];
-    console.log(name);
 
-    socket.on('getTheMessage', data => {
-        console.log(data);
+    socket.on('getTheMessageNL', data => {
         if (data.name === 'Nugget Lord') {
             if (typeof(data.message) === 'number') {
                 if (!bubbleUp) {
-                    console.log(typeof(data.message));
                     bubbleUp = data.message;
                     bubbleImg.src = 'nl/parisMessage.png';
                     // bubbleImg.src = imgURLs[data.message - 1];
@@ -175,7 +160,6 @@ socket.on('connect', () => {
                 if (!parisBomb) {
                     parisBomb = true;
                     bombLeGo = setInterval(() => {
-                        console.log(parisCount);
                         bombCtx.drawImage(parisObjs[parisCount], 0, 0, parisImgDims[parisCount].w, parisImgDims[parisCount].h, Math.random() * ((window.innerWidth - 100) - 0) + 0, Math.random() * ((window.innerHeight - 100) - 0) + 0, parisImgDims[parisCount].w / 5, parisImgDims[parisCount].h / 5);
                         parisCount += 1;
                         if (parisCount === 49) {
@@ -192,8 +176,7 @@ socket.on('connect', () => {
         } else {
             createMessage(data.name, data.message);
         }
-    })
-
+    });
 });
 
 function playAudio(num) {
@@ -202,7 +185,6 @@ function playAudio(num) {
 }
 
 function createMessage(name, messageX) {
-    console.log(name, messageX);
     // playAudio();
     var message = document.createElement("div");
     var id = document.createElement("p");
@@ -228,7 +210,8 @@ bubble.addEventListener('click', () => {
 
 send.addEventListener('click', () => {
     if (textarea.value) {
-        socket.emit('newMessage', {name: name, message: textarea.value});
+        socket.emit('newMessageNL', {name: name, message: textarea.value});
+        createMessage(name, textarea.value);
         textarea.value = '';
     }
 })

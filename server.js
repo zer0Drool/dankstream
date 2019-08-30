@@ -20,14 +20,6 @@ var stats = [
         position: null
     },
     {
-        name: 'Nugget Lord',
-        hits: 0,
-        time: 0,
-        viewers: 0,
-        score: 0,
-        position: null
-    },
-    {
         name: 'Prawn Boy',
         hits: 0,
         time: 0,
@@ -42,25 +34,36 @@ var stats = [
         viewers: 0,
         score: 0,
         position: null
+    },
+    {
+        name: 'Nugget Lord',
+        hits: 0,
+        time: 0,
+        viewers: 0,
+        score: 0,
+        position: null
     }
 ]
 
+var roomsArray = ['james', 'grant', 'tori', 'ian', 'james-m', 'grant-m', 'tori-m', 'ian-m'];
+
 io.on('connection', (socket) => {
     socket.on('join', data => {
-        console.log(data.who);
-        if (data.who < 4) {
-            socket.dankRoom = data.who;
-            socket.join(data.who);
-            stats[data.who].hits += 1;
-            stats[data.who].viewers += 1;
-            stats[data.who].score += ((stats[data.who].hits * stats[data.who].viewers) / 10);
-            console.log(stats[data.who]);
+        socket.join(roomsArray[data.who - 1]);
+        console.log('DATA>WHO', data.who);
+        if (data.who <= 4) {
+            socket.dankRoom = data.who - 1;
+            console.log('THE DANK ROOM PLOX', socket.dankRoom);
+            console.log('SDndsvbdspibvc;dsvbdsvbd;fsbuvdlisbvsd;ibjvd;afb', socket.rooms);
+            stats[data.who - 1].hits += 1;
+            stats[data.who - 1].viewers += 1;
+            stats[data.who - 1].score += ((stats[data.who - 1].hits * stats[data.who - 1].viewers) / 10);
+            console.log('AM I GERE???', stats[data.who - 1]);
             io.emit('updateScore', stats);
         }
     });
 
     socket.on('disconnect', () => {
-        console.log('DANK ROOOOM', socket.dankRoom);
         if (socket.dankRoom) {
             stats[socket.dankRoom].viewers -= 1;
             io.emit('updateScore', stats);
@@ -79,15 +82,14 @@ io.on('connection', (socket) => {
         socket.to(data.who).emit('shadeThrown');
     });
 
-    socket.on('newMessage', data => {
-        console.log(data);
+    socket.on('newMessageNL', data => {
         var info = {
             name: data.name,
             message: data.message
         }
-        socket.to('4').emit('getTheMessage', info);
-        socket.to('8').emit('getTheMessage', info);
-    })
+        socket.to('ian').emit('getTheMessageNL', info);
+        socket.to('ian-m').emit('getTheMessageNL', info);
+    });
 });
 
 function uVizionAdTimer() {

@@ -11,14 +11,15 @@ if (location.protocol != 'http:') {
 
 // var socket = io.connect('http://192.168.1.226:8080'); //studio
 // var socket = io.connect('http://192.168.4.1:8080'); //ultraPi
-var socket = io.connect('http://192.168.1.234:8080'); //ts
+// var socket = io.connect('http://192.168.1.234:8080'); //ts
+var socket = io.connect('http://172.20.10.2:8080'); //salazar
 
 //declarations
 var jButtonOne = document.getElementById('j-button-one');
 var jButtonTwo = document.getElementById('j-button-two');
 
 socket.on('connect', function(data) {
-    socket.emit('join', {who: 4});
+    socket.emit('join', {who: 5});
 
     socket.on('shadeThrown', () => {
         console.log('the people have thown shade');

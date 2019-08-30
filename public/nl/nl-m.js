@@ -28,41 +28,48 @@ mind. It just made sense. An image of orange, of mutant, of nugget, of Wotsit be
 emblazoned into my motor neurone network- an image that has never left. It was the spiritual
 awakening that I had, so, been longing for. I owe Paris everything. Long live the sacred nugget.`, 'boom'];
 
-var socket = io.connect('http://192.168.1.234:8080'); //ts
+// var socket = io.connect('http://192.168.1.234:8080'); //ts
+var socket = io.connect('http://172.20.10.2:8080'); //salazar
 // var socket = io.connect('http:///172.20.10.3:8080'); //harlesden
 
 messages.style.height = `${window.innerHeight - write.offsetHeight}px`;
 lucaboiz.style.bottom = `${write.offsetHeight + 10}px`;
 
+function createMessage(name, messagex) {
+    var message = document.createElement("div");
+    var id = document.createElement("p");
+    id.innerText = name;
+    var text = document.createElement("p");
+    text.innerText = messagex;
+    message.appendChild(id);
+    message.appendChild(text);
+    message.classList.add('message');
+    if (name === 'Nugget Lord') {
+        message.classList.add('lord');
+    }
+    messages.prepend(message);
+}
+
 socket.on('connect', () => {
 
-    socket.on('getTheMessage', data => {
-        console.log(data);
-        var message = document.createElement("div");
-        var id = document.createElement("p");
-        id.innerText = data.name;
-        var text = document.createElement("p");
-        text.innerText = data.message;
-        message.appendChild(id);
-        message.appendChild(text);
-        message.classList.add('message');
-        if (data.name === 'Nugget Lord') {
-            message.classList.add('lord');
-        }
-        messages.prepend(message);
-    })
+    socket.emit('join', {who: 8});
+
+    socket.on('getTheMessageNL', data => {
+        createMessage(data.name, data.message);
+    });
 
 });
 
 for (let i = 0; i < responses.length; i++) {
     responses[i].addEventListener('click', () => {
-        socket.emit('newMessage', {name: 'Nugget Lord', message: fathoms[i]});
+        socket.emit('newMessageNL', {name: 'Nugget Lord', message: fathoms[i]});
     })
 }
 
 send.addEventListener('click', () => {
     if (textarea.value) {
-        socket.emit('newMessage', {name: 'Nugget Lord', message: textarea.value});
+        socket.emit('newMessageNL', {name: 'Nugget Lord', message: textarea.value});
+        createMessage('Nugget Lord', textarea.value);
         textarea.value = '';
     }
 })
