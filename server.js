@@ -78,6 +78,16 @@ io.on('connection', (socket) => {
     socket.on('throwingShade', data => {
         socket.to(data.who).emit('shadeThrown');
     });
+
+    socket.on('newMessage', data => {
+        console.log(data);
+        var info = {
+            name: data.name,
+            message: data.message
+        }
+        socket.to('4').emit('getTheMessage', info);
+        socket.to('8').emit('getTheMessage', info);
+    })
 });
 
 function uVizionAdTimer() {
@@ -121,6 +131,10 @@ app.get('/nl-m', (req, res) => {
 
 app.get('/leaderboard', (req, res) => {
     res.sendFile(__dirname + '/leaderboard.html');
+});
+
+app.get('/die', (req, res) => {
+    res.sendFile(__dirname + '/die.html');
 });
 
 app.get('/', (req, res) => {

@@ -1,0 +1,470 @@
+console.log('grant');
+
+// window.onerror = function(msg, url, linenumber) {
+//     alert('FUCKING ERROR - msg ', msg, ' - url ', url, ' - linenumber ', linenumber);
+//     return true;
+// }
+
+if (location.protocol != 'http:') {
+    location.href = 'http:' + window.location.href.substring(window.location.protocol.length);
+}
+
+// var socket = io.connect('http://192.168.1.226:8080'); //studio
+// var socket = io.connect('http://192.168.4.1:8080'); //ultraPi
+var socket = io.connect('http://192.168.1.234:8080'); //ts
+
+//declarations
+// var tButton = document.getElementById('t-button');
+var uVizAd = document.getElementById('capita');
+
+socket.on('connect', function(data) {
+   socket.emit('join', {who: 2});
+
+   socket.on('yourRekt', data => {
+       console.log('getting rekt');
+       document.body.classList.add('rekt');
+       setTimeout(() => {
+           document.body.classList.remove('rekt');
+       }, 3100);
+   });
+
+   socket.on('allIsFuked', data => {
+       console.log(data.who, ' pwns all');
+       document.body.classList.add('pwned');
+       setTimeout(() => {
+           document.body.classList.remove('pwned');
+       }, 2100);
+   });
+
+   socket.on('timeForAd', () => {
+       uVizAd.classList.add('adTime');
+       setTimeout(() => {
+           uVizAd.classList.remove('adTime');
+       }, 6000);
+   });
+
+   socket.on('disconnect', () => {
+       socket.emit('leaving', {who: 2});
+   })
+});
+
+tButton.addEventListener('click', () => {
+    socket.emit('throwingShade', {who: 6});
+});
+
+// LOADING
+var feedTxt = new Image();
+feedTxt.src = 'pb/assets/feed.png';
+feedTxt.onload = function() {
+    document.getElementById('top').appendChild(feedTxt);
+}
+var itTxt = new Image();
+itTxt.src = 'pb/assets/it.png';
+itTxt.onload = function() {
+    document.getElementById('bottom').appendChild(itTxt);
+}
+var tooTxt = new Image();
+tooTxt.src = 'pb/assets/too.png';
+tooTxt.id = 'too';
+var fullTxt = new Image();
+fullTxt.src = 'pb/assets/full.png';
+fullTxt.id = 'full';
+
+var prawnSrcs = [];
+var prawnObjs = [];
+var prawnLoader = 0;
+var prawnLoaded = false;
+
+for (var i = 0; i < 8; i++) {
+    prawnSrcs.push(`pb/assets/p${i + 1}.png`);
+    var prawnObj = new Image();
+    prawnObj.src = prawnSrcs[i];
+    prawnObj.onload = function() {
+        prawnLoader++;
+        if (prawnLoader === 8) {
+            prawnLoaded = true;
+            prawnsReady();
+        }
+    }
+    prawnObjs.push(prawnObj);
+}
+
+var prawnCanvas = document.getElementById('prawn-canvas');
+prawnCanvas.width = window.innerWidth;
+prawnCanvas.height = window.innerHeight;
+var prawnContext =  prawnCanvas.getContext('2d');
+
+var tearsSrcs = [];
+var tearsObjs = [];
+var tearsLoader = 0;
+var tearsLoaded = false;
+
+for (var i = 0; i < 5; i++) {
+    tearsSrcs.push(`pb/assets/h2o${i + 1}z.png`);
+    var tearsObj = new Image();
+    tearsObj.src = tearsSrcs[i];
+    tearsObj.onload = function() {
+        tearsLoader++;
+        if (tearsLoader === 5) {
+            tearsLoaded = true;
+            tearsReady();
+        }
+    }
+    tearsObjs.push(tearsObj);
+}
+
+var foodSrcs = [];
+var foodObjs = [];
+var foodLoader = 0;
+var foodLoaded = false;
+
+for (var i = 0; i < 3; i++) {
+    foodSrcs.push(`pb/assets/f${i + 1}.png`);
+    var foodObj = new Image();
+    foodObj.src = foodSrcs[i];
+    foodObj.onload = function() {
+        foodLoader++;
+        if (foodLoader === 3) {
+            foodLoaded = true;
+            foodReady();
+        }
+    }
+    foodObjs.push(foodObj);
+}
+
+// PRAWN VARS
+var RAD = Math.PI/10000;
+var whatPrawn = 0;
+var foodCounter = 0;
+var isReallySad = false;
+var prawnXvar = 0;
+var prawnXvarTog = false;
+var prawnYvar = 0;
+var prawnYvarTog = false;
+var prawnImgInfo = [
+    {
+        w: 1300,
+        h: 1301
+    },
+    {
+        w: 1300,
+        h: 1301
+    },
+    {
+        w: 1300,
+        h: 1301
+    },
+    {
+        w: 1300,
+        h: 1301
+    },
+    {
+        w: 1300,
+        h: 1301
+    },
+    {
+        w: 1300,
+        h: 1301
+    },
+    {
+        w: 1300,
+        h: 1301
+    },
+    {
+        w: 1300,
+        h: 1301
+    }
+]
+
+// PRAWN FUNCS
+function cryPrawn() {
+    whatPrawn = whatPrawn === 6 ? 7 : 6;
+}
+
+function prawnsReady() {
+    prawnCanvas.addEventListener('click', letsfeedThisPrawn);
+}
+
+// TEARS VARS
+var tearsReadyX = false;
+var tearsToggle = 0;
+var tearsPeak;
+var tearsHeight = window.innerHeight;
+var tearsImgInfo = [
+    {
+        w: 1547,
+        h: 4000
+    },
+    {
+        w: 1547,
+        h: 4000
+    },
+    {
+        w: 1547,
+        h: 4000
+    },
+    {
+        w: 1547,
+        h: 4000
+    },
+    {
+        w: 1547,
+        h: 4000
+    }
+]
+
+// TEARS FUNCS
+function timeToCry() {
+    tearsToggle = tearsToggle === 4 ? 0 : tearsToggle + 1;
+}
+
+function tearsReady() {
+    tearsReadyX = true;
+}
+
+// FOOD VARS
+var foodId = 1;
+var foodAnimationFrame;
+var foodImgInfo = [
+    {
+        w: 200,
+        h: 200
+    },
+    {
+        w: 125,
+        h: 197
+    },
+    {
+        w: 140,
+        h: 179
+    }
+]
+var foodSettings = {
+    foodsOnScreen: [], // an array for all current foods on screen and their properties
+    minScale: 0.2,
+    w: window.innerWidth,
+    h: window.innerHeight
+}
+
+// FOOD FUNCS
+function foodReady() {
+    setInterval(drawFoods, 35);
+}
+
+function eatmore(data) {
+    var whatFood = Math.floor(Math.random() * 3);
+    var scale = (Math.random() * (0.7 - foodSettings.minScale)) + foodSettings.minScale;
+    foodSettings.foodsOnScreen.push({
+        id: foodId,
+        x: data.touchX - (foodImgInfo[whatFood].w / 2),
+        y: data.touchY - (foodImgInfo[whatFood].h / 2),
+        ys: data.dirY ? Math.random() : - (Math.random()),
+        xs: data.dirX ? Math.random() : - (Math.random()),
+        height: (scale) * foodImgInfo[whatFood].h,
+        width: (scale) * foodImgInfo[whatFood].w,
+        rotato: Math.floor(Math.random() * 360) + 1,
+        rotatoDir: Math.random() > 0.5 ? true : false,
+        opacity: 1,
+        whatFood: whatFood
+    });
+    foodId++;
+}
+
+function foodMove() {
+    for (var i = 0; i < foodSettings.foodsOnScreen.length; i++) {
+        var food = foodSettings.foodsOnScreen[i];
+        food.y += food.ys;
+        food.x += food.xs;
+        food.opacity  = food.opacity - 0.05;
+        food.rotato = food.rotatoDir ? food.rotato + 4 : food.rotato - 4;
+        if (food.opacity < 0) {
+            foodSettings.foodsOnScreen = foodSettings.foodsOnScreen.filter(foodX => foodX.id !== food.id);
+        }
+    }
+}
+
+function drawFoods() {
+    prawnContext.clearRect(0, 0, foodSettings.w, foodSettings.h);
+
+    var ratio = prawnImgInfo[whatPrawn].w / prawnImgInfo[whatPrawn].h
+    prawnContext.globalAlpha = 1;
+    if (prawnXvar < 10 && !prawnXvarTog) {
+        prawnXvar = whatPrawn >= 2 && whatPrawn < 4 ? prawnXvar + (10 / (Math.random() * (57 - 10) + 10)) * 2 : whatPrawn === 4 ? prawnXvar + (10 / (Math.random() * (57 - 10) + 10)) * 3 : whatPrawn === 5 ? prawnXvar + (10 / (Math.random() * (57 - 10) + 10)) * 4 : prawnXvar + (10 / (Math.random() * (57 - 10) + 10));
+        if (prawnXvar >= 10) {
+            prawnXvarTog = true;
+        }
+    } else if (prawnXvar > - 10 && prawnXvarTog) {
+        prawnXvar = whatPrawn >= 2 && whatPrawn < 4 ? prawnXvar - (10 / (Math.random() * (57 - 10) + 10)) * 2 : whatPrawn === 4 ? prawnXvar - (10 / (Math.random() * (57 - 10) + 10)) * 3 : whatPrawn === 5 ? prawnXvar - (10 / (Math.random() * (57 - 10) + 10)) * 4 : prawnXvar - (10 / (Math.random() * (57 - 10) + 10));
+        if (prawnXvar <= -10) {
+            prawnXvarTog = false;
+        }
+    }
+    if (prawnYvar < 10 && !prawnYvarTog) {
+        prawnYvar = whatPrawn >= 2 && whatPrawn < 4 ? prawnYvar + (10 / (Math.random() * (57 - 10) + 10)) * 2 : whatPrawn === 4 ? prawnYvar + (10 / (Math.random() * (57 - 10) + 10)) * 3 : whatPrawn === 5 ? prawnYvar + (10 / (Math.random() * (57 - 10) + 10)) * 4 : prawnYvar + (10 / (Math.random() * (57 - 10) + 10));
+        if (prawnYvar >= 10) {
+            prawnYvarTog = true;
+        }
+    } else if (prawnYvar > - 10 && prawnYvarTog) {
+        prawnYvar = whatPrawn >= 2 && whatPrawn < 4 ? prawnYvar - (10 / (Math.random() * (57 - 10) + 10)) * 2 : whatPrawn === 4 ? prawnYvar - (10 / (Math.random() * (57 - 10) + 10)) * 3 : whatPrawn === 5 ? prawnYvar - (10 / (Math.random() * (57 - 10) + 10)) * 4 : prawnYvar - (10 / (Math.random() * (57 - 10) + 10));
+        if (prawnYvar <= -10) {
+            prawnYvarTog = false;
+        }
+    }
+    prawnContext.drawImage(prawnObjs[whatPrawn], 0, 0, prawnImgInfo[whatPrawn].w, prawnImgInfo[whatPrawn].h, 0 + prawnXvar, ((window.innerHeight - (prawnCanvas.width / ratio)) / 2) + prawnYvar, prawnCanvas.width, prawnCanvas.width / ratio);
+
+    for (var i = 0; i < foodSettings.foodsOnScreen.length; i++) {
+        var food = foodSettings.foodsOnScreen[i];
+        prawnContext.globalAlpha = food.opacity;
+        prawnContext.save();
+        prawnContext.translate(food.x - (food.w * 20), food.y - (food.h * 20));
+        prawnContext.rotate(food.rotato * RAD);
+        prawnContext.drawImage (foodObjs[food.whatFood], food.x + (foodImgInfo[food.whatFood].w / 4), food.y, food.width, food.height);
+        prawnContext.restore();
+    }
+
+    if (isReallySad && tearsReadyX && !tearsPeak) {
+        tearsHeight = tearsHeight - (window.innerHeight / 286);
+        prawnContext.globalAlpha = 0.4;
+        var tearsRatio = tearsImgInfo[tearsToggle].w / tearsImgInfo[tearsToggle].h;
+        prawnContext.drawImage(tearsObjs[tearsToggle], 0, 0, tearsImgInfo[tearsToggle].w, tearsImgInfo[tearsToggle].h, 0, tearsHeight, prawnCanvas.width, prawnCanvas.width / tearsRatio);
+        if (tearsHeight < 0) {
+            tearsPeak = true;
+        }
+    } else if (isReallySad && weIsReversing && tearsPeak && !goBackTears) {
+        tearsHeight = 0;
+        prawnContext.globalAlpha = 0.4;
+        var tearsRatio = tearsImgInfo[tearsToggle].w / tearsImgInfo[tearsToggle].h;
+        prawnContext.drawImage(tearsObjs[tearsToggle], 0, 0, tearsImgInfo[tearsToggle].w, tearsImgInfo[tearsToggle].h, 0, tearsHeight, prawnCanvas.width, prawnCanvas.width / tearsRatio);
+    } else if (isReallySad && weIsReversing && tearsPeak && goBackTears) {
+        tearsHeight = tearsHeight + (window.innerHeight / 286);
+        prawnContext.globalAlpha = 0.4;
+        var tearsRatio = tearsImgInfo[tearsToggle].w / tearsImgInfo[tearsToggle].h;
+        prawnContext.drawImage(tearsObjs[tearsToggle], 0, 0, tearsImgInfo[tearsToggle].w, tearsImgInfo[tearsToggle].h, 0, tearsHeight, prawnCanvas.width, prawnCanvas.width / tearsRatio);
+        if (tearsHeight <= 0) {
+            tearsPeak = false;
+        }
+    }
+
+    foodMove();
+}
+
+// MISC FUNCS
+var timeToCryInterval;
+var cryPrawnInterval;
+var reverseCryInterval;
+var hasFedInterval;
+
+var goBackTears = false;
+var hasFed = false;
+var oofing = false;
+var weIsReversing = false;
+
+function animateThisShit() {
+    document.getElementById('top').removeChild(document.getElementById('top').childNodes[0]);
+    document.getElementById('top').appendChild(tooTxt);
+    document.getElementById('bottom').removeChild(document.getElementById('bottom').childNodes[0]);
+    document.getElementById('bottom').appendChild(fullTxt);
+    document.getElementsByTagName('audio')[3].play();
+    timeToCryInterval = setInterval(timeToCry, 693);
+    cryPrawnInterval = setInterval(cryPrawn, 342);
+}
+
+function checkIfFed() {
+    if (hasFedInterval) {
+        window.clearTimeout(hasFedInterval);
+    }
+    hasFed = true;
+    hasFedInterval = setTimeout(() => {
+        hasFed = false;
+    }, 2000);
+}
+
+function reverseCry() {
+    if (hasFed === false && whatPrawn > 0 && isReallySad === false) {
+        whatPrawn--;
+        foodCounter -= 10;
+    }
+    if (isReallySad && weIsReversing === false) {
+        weIsReversing = true
+        if (reverseCryInterval) {
+            window.clearInterval(reverseCryInterval);
+        }
+        setTimeout(() =>{
+            document.getElementsByTagName('audio')[3].pause();
+        }, 19000);
+        setTimeout(backToTheStart, 20000);
+    }
+}
+
+reverseCryInterval = setInterval(reverseCry, 3000);
+
+function backToTheStart() {
+    goBackTears = true;
+    setTimeout(() => {
+        document.getElementsByTagName('audio')[4].play(); // NOT WORKING!!!!!!!
+    }, 100);
+    setTimeout(() => {
+        window.clearInterval(cryPrawnInterval);
+        hasFed = false;
+        foodCounter = 0;
+        isReallySad = false;
+        whatPrawn = 0;
+        goBackTears = false;
+        weIsReversing = false;
+        document.getElementsByTagName('audio')[4].pause();
+        document.getElementById('top').removeChild(document.getElementById('top').childNodes[0]);
+        document.getElementById('top').appendChild(feedTxt);
+        document.getElementById('bottom').removeChild(document.getElementById('bottom').childNodes[0]);
+        document.getElementById('bottom').appendChild(itTxt);
+        reverseCryInterval = setInterval(reverseCry, 3000);
+    }, 10000);
+}
+
+function oof() {
+    if (oofing) {
+        return;
+    } else {
+        document.getElementsByTagName('audio')[Math.floor(Math.random() * 3)].play();
+        oofing = true;
+        prawnCanvas.classList.add('oof');
+        setTimeout(() => {
+            prawnCanvas.classList.remove('oof');
+            oofing = false;
+        }, whatPrawn >= 4 ? 200 : 400);
+    }
+}
+
+function letsfeedThisPrawn(e) {
+    if (!isReallySad) {
+        // PRAWN ANIM
+        foodCounter++;
+        if (foodCounter === 10) {
+            whatPrawn = 1;
+        } else if (foodCounter === 20) {
+            whatPrawn = 2;
+        } else if (foodCounter === 30) {
+            whatPrawn = 3;
+        } else if (foodCounter === 40) {
+            whatPrawn = 4;
+        } else if (foodCounter === 60) {
+            whatPrawn = 5;
+        } else if (foodCounter === 70) {
+            whatPrawn = 6;
+            isReallySad = true;
+            animateThisShit();
+        }
+
+        // FOOD ANIM
+        var data = {
+            touchX: e.pageX,
+            touchY: e.pageY,
+            dirX: e.pageX > (window.innerWidth / 2) ? false : true,
+            dirY: e.pageY > (window.innerHeight / 2) ? false : true,
+         }
+        if ((data.touchX > window.innerWidth / 3 && data.touchX < window.innerWidth - (window.innerWidth / 3)) && (data.touchY > window.innerHeight / 3 && data.touchY < window.innerHeight - (window.innerHeight / 3))) {
+            checkIfFed();
+            oof();
+            eatmore(data);
+        }
+    }
+}

@@ -69,15 +69,15 @@ var directionalLight = new THREE.DirectionalLight( 0xffffff, 0.8 );
 directionalLight.position.set(1, 2, 5);
 scene.add( directionalLight );
 
-var james, grant, tori, ian;
+var deadboythekid, prawnboy, wormperson, nuggetlord;
 var assetCount = 0;
 
 function assetLoaded() {
     assetCount++;
     console.log('asset count' ,assetCount);
     if (assetCount === 4) {
-        scene.add(james);
-        james.position.set(-0.3, -0.7, 0);
+        scene.add(deadboythekid);
+        deadboythekid.position.set(-0.3, -0.7, 0);
         terminal.style.display = 'none';
         modelCanv.style.display = 'block';
         avatarName.style.display = 'block';
@@ -91,11 +91,11 @@ var loader = new THREE.OBJLoader();
 loader.load(
 	`assets/avatarSelecta/jModel.obj`,
 	function (object) {
-        james = object;
+        deadboythekid = object;
         assetLoaded();
 	},
 	function (xhr) {
-		console.log( (xhr.loaded / xhr.total) + ' loaded james');
+		console.log( (xhr.loaded / xhr.total) + ' loaded deadboythekid');
         terminal.innerHTML = terminal.innerHTML + `<p>${xhr.loaded / xhr.total}</p>`
 	},
 	function (error) {
@@ -106,11 +106,11 @@ loader.load(
 loader.load(
 	`assets/avatarSelecta/gModelZ.obj`,
 	function (object) {
-        grant = object;
+        prawnboy = object;
         assetLoaded();
 	},
 	function (xhr) {
-		console.log( (xhr.loaded / xhr.total) + ' loaded grant');
+		console.log( (xhr.loaded / xhr.total) + ' loaded prawnboy');
         terminal.innerHTML = terminal.innerHTML + `<p>${xhr.loaded / xhr.total}</p>`
 	},
 	function (error) {
@@ -121,11 +121,11 @@ loader.load(
 loader.load(
 	`assets/avatarSelecta/tModel.obj`,
 	function (object) {
-        tori = object;
+        wormperson = object;
         assetLoaded();
 	},
 	function (xhr) {
-		console.log( (xhr.loaded / xhr.total) + ' loaded tori');
+		console.log( (xhr.loaded / xhr.total) + ' loaded wormperson');
         terminal.innerHTML = terminal.innerHTML + `<p>${xhr.loaded / xhr.total}</p>`
 	},
 	function (error) {
@@ -136,11 +136,11 @@ loader.load(
 loader.load(
 	`assets/avatarSelecta/iModel.obj`,
 	function (object) {
-        ian = object;
+        nuggetlord = object;
         assetLoaded();
 	},
 	function (xhr) {
-		console.log( (xhr.loaded / xhr.total) + ' loaded ian');
+		console.log( (xhr.loaded / xhr.total) + ' loaded nuggetlord');
         terminal.innerHTML = terminal.innerHTML + `<p>${xhr.loaded / xhr.total}</p>`
 	},
 	function (error) {
@@ -151,17 +151,17 @@ loader.load(
 var render = function () {
     requestAnimationFrame( render );
 
-    if (james) {
-        james.rotation.y += 0.01;
+    if (deadboythekid) {
+        deadboythekid.rotation.y += 0.01;
     }
-    if (grant) {
-        grant.rotation.y += 0.01;
+    if (prawnboy) {
+        prawnboy.rotation.y += 0.01;
     }
-    if (tori) {
-        tori.rotation.y += 0.01;
+    if (wormperson) {
+        wormperson.rotation.y += 0.01;
     }
-    if (ian) {
-        ian.rotation.y += 0.01;
+    if (nuggetlord) {
+        nuggetlord.rotation.y += 0.01;
     }
 
     renderer.render(scene, camera);
@@ -174,7 +174,7 @@ render();
 
 for (var i = 0; i < avatarHeads.length; i++) {
     avatarHeads[i].addEventListener('click', e => {
-        changeAvatar(e.target.innerText)
+        changeAvatar(e.target.id)
     });
 }
 
@@ -183,13 +183,13 @@ modelCanv.addEventListener('click', () => {
 })
 
 var currentlySelected = {
-    name: 'james',
+    name: 'deadboythekid',
     index: 0
 };
 
 function changeAvatar(who) {
     if (who !== currentlySelected.name) {
-        var index = who === 'james' ? 0 : who === 'grant' ? 1 : who === 'tori' ? 2 : 3;
+        var index = who === 'deadboythekid' ? 0 : who === 'prawnboy' ? 1 : who === 'wormperson' ? 2 : 3;
         avatarName.innerText = `< ${who} >`;
         avatarHeads[currentlySelected.index].classList.remove('selectedHead');
         avatarHeads[index].classList.add('selectedHead');
@@ -197,31 +197,31 @@ function changeAvatar(who) {
         new Promise((resolve, reject) => {
             console.log('left');
             setTimeout(() => {
-                if (currentlySelected.name === 'james') {
-                    scene.remove(james);
-                } else if (currentlySelected.name === 'grant') {
-                    scene.remove(grant);
-                } else if (currentlySelected.name === 'tori') {
-                    scene.remove(tori);
+                if (currentlySelected.name === 'deadboythekid') {
+                    scene.remove(deadboythekid);
+                } else if (currentlySelected.name === 'prawnboy') {
+                    scene.remove(prawnboy);
+                } else if (currentlySelected.name === 'wormperson') {
+                    scene.remove(wormperson);
                 } else {
-                    scene.remove(ian);
+                    scene.remove(nuggetlord);
                 }
                 currentlySelected = {name: who, index: index};
                 resolve();
             }, 450);
         }).then(() => {
             console.log('right');
-            if (currentlySelected.name === 'james') {
-                scene.add(james);
-            } else if (currentlySelected.name === 'grant') {
-                scene.add(grant);
-                grant.position.set(-0.3, 1.3, -10);
-            } else if (currentlySelected.name === 'tori') {
-                scene.add(tori);
-                tori.position.set(-0.4, -1, -1);
+            if (currentlySelected.name === 'deadboythekid') {
+                scene.add(deadboythekid);
+            } else if (currentlySelected.name === 'prawnboy') {
+                scene.add(prawnboy);
+                prawnboy.position.set(-0.3, 1.3, -10);
+            } else if (currentlySelected.name === 'wormperson') {
+                scene.add(wormperson);
+                wormperson.position.set(-0.4, -1, -1);
             } else {
-                scene.add(ian);
-                ian.position.set(-0.3, -0.85, -0.5);
+                scene.add(nuggetlord);
+                nuggetlord.position.set(-0.3, -0.85, -0.5);
             };
             modelCanv.style.left = '0';
         });
@@ -233,6 +233,8 @@ function enterStream() {
     modelCanv.style.left = '100vw';
     setTimeout(() => {
         // window.location.href = `http://192.168.1.226:8080/${currentlySelected.name}`; // gibson
-        window.location.href = `http://192.168.4.1:8080/${currentlySelected.name}`; //ultraPi
+        // window.location.href = `http://192.168.4.1:8080/${currentlySelected.name}`; //ultraPi
+        window.location.href = `http://192.168.1.234:8080/${currentlySelected.name}`; //ts
+        // window.location.href = `http://localhost:8080/${currentlySelected.name}`; //ts
     }, 405)
 }

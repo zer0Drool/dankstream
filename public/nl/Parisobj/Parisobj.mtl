@@ -1,0 +1,119 @@
+#
+# Wavefront material file
+# Converted by the DEEP Exploration  Deep Exploration 5 5.0.6.1867 Release
+# Right Hemisphere, LTD
+# http://www.righthemisphere.com/
+#
+
+newmtl skin
+Ka 1 1 1
+Kd 0.85098 0.756863 0.682353
+Ks 0.270588 0.270588 0.270588
+illum 0
+Ns 0
+d 1
+map_Kd Paris_skmod.jpg
+map_bump
+bump
+map_opacity
+map_d
+refl
+map_kS
+map_kA
+map_Ns
+
+newmtl _2___Default
+Ka 0.588235 0.588235 0.588235
+Kd 1 1 1
+Ks 0 0 0
+illum 2
+Ns 5
+map_Kd Paris_e1.jpg
+map_bump
+bump
+map_opacity
+map_d
+refl
+map_kS
+map_kA
+map_Ns
+
+newmtl _3___Default
+Ka 0.588235 0.588235 0.588235
+Kd 1 1 1
+Ks 0 0 0
+illum 2
+Ns 5
+map_Kd Paris_ey.jpg
+map_bump
+bump
+map_opacity
+map_d
+refl
+map_kS
+map_kA
+map_Ns
+
+newmtl _4___Default
+Ka 0.588235 0.588235 0.588235
+Kd 1 1 1
+Ks 0.9 0.9 0.9
+illum 0
+Ns 0
+map_Kd parisfront.jpg
+map_bump
+bump
+map_opacity
+map_d
+refl
+map_kS
+map_kA
+map_Ns
+
+newmtl wireframe_color_0xE05656
+Ka 0.117647 0.117647 0.117647
+Kd 0.878431 0.337255 0.337255
+Ks 0.752941 0.752941 0.752941
+illum 0
+Ns 8
+map_Kd
+map_bump
+bump
+map_opacity
+map_d
+refl
+map_kS
+map_kA
+map_Ns
+
+newmtl wireframe_color_0xE056560
+Ka 0.117647 0.117647 0.117647
+Kd 0.878431 0.337255 0.337255
+Ks 0.752941 0.752941 0.752941
+illum 0
+Ns 0
+map_Kd
+map_bump
+bump
+map_opacity
+map_d
+refl
+map_kS
+map_kA
+map_Ns
+
+newmtl _8___Default
+Ka 0.588235 0.588235 0.588235
+Kd 1 1 1
+Ks 1 1 1
+illum 2
+Ns 0
+map_Kd hairdiff.jpg
+map_bump
+bump
+map_opacity hairalpha.jpg
+map_d hairalpha.jpg
+refl
+map_kS hairspec.jpg
+map_kA
+map_Ns

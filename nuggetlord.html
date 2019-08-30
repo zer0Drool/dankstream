@@ -2,18 +2,43 @@
 <html lang="en" dir="ltr">
     <head>
         <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
         <title>nugget-lord</title>
-        <link rel="stylesheet" href="nuggetlord.css">
+        <link rel="stylesheet" href="nl/nuggetlord.css">
     </head>
     <body>
-        <h1>ian</h1>
-        <button id="i-button">throw shade</button>
+        <div id="background"></div>
+
+        <div id="messages"></div>
+
+        <div id="bubble">
+            <img id="bubbleImg">
+        </div>
+
+        <canvas id="bomb-canvas"></canvas>
+
+        <div id="write">
+            <textarea maxlength="200" name="writeMessage" rows="1" cols="10" placeholder="message..."></textarea>
+            <div id="send"><img src="nl/send.png"></div>
+        </div>
+
         <div id="uVizionAd">
             <div>
                 <img id="capita" src="./assets/avatarSelecta/uviz.png" alt="uVizion">
             </div>
         </div>
+
+        <audio src="nl/audio/bff.mp3" preload="metadata"></audio>
+        <audio src="nl/audio/hot.mp3" preload="metadata"></audio>
+        <audio src="nl/audio/heave.mp3" preload="metadata"></audio>
+        <audio src="nl/audio/blood.mp3" preload="metadata"></audio>
+        <audio src="nl/audio/eww.mp3" preload="metadata"></audio>
+        <audio src="nl/audio/sexy.mp3" preload="metadata"></audio>
+
+        <script src="scripts/three.min.js"></script>
+        <script src="scripts/mtlloader.js"></script>
+        <script src="scripts/objloader.js"></script>
         <script src="/socket.io/socket.io.js"></script>
-        <script src="nuggetlord.js"></script>
+        <script src="nl/nuggetlord.js"></script>
     </body>
 </html>
