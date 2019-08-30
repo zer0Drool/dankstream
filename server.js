@@ -16,28 +16,32 @@ var stats = [
         hits: 0,
         time: 0,
         viewers: 0,
-        score: 0
+        score: 0,
+        position: null
     },
     {
         name: 'Nugget Lord',
         hits: 0,
         time: 0,
         viewers: 0,
-        score: 0
+        score: 0,
+        position: null
     },
     {
         name: 'Prawn Boy',
         hits: 0,
         time: 0,
         viewers: 0,
-        score: 0
+        score: 0,
+        position: null
     },
     {
         name: 'Worm Person',
         hits: 0,
         time: 0,
         viewers: 0,
-        score: 0
+        score: 0,
+        position: null
     }
 ]
 

@@ -38,9 +38,15 @@
 }
 
 @keyframes winning {
-    0%   {transform: scale(0);}
+    0%   {transform: scale(1);}
     50%  {transform: scale(1.2);}
-    100% {transform: scale(0);}
+    100% {transform: scale(1);}
+}
+
+@keyframes flash {
+    0%   {filter: invert(0);}
+    50%  {filter: invert(1);}
+    100% {filter: invert(0);}
 }
 
 * {
@@ -52,17 +58,27 @@
 body {
     width: 100vw;
     height: 100vh;
+    overflow: hidden;
     background-color: black;
     /* background: linear-gradient(black, black, rgba(128, 0, 128, 0.5), purple), linear-gradient(-100deg, black, black, rgba(0, 100, 200, 0.5), blue), linear-gradient(100deg, black, black, rgba(200, 100, 0, 0.4), red); */
     background: linear-gradient(black, black, rgba(128, 0, 128, 0.5), rgba(128, 0, 128, 0.7)), linear-gradient(-209deg, black, black, rgba(0, 100, 200, 0.5), rgba(0, 100, 200, 0.7)), linear-gradient(-70deg, black, black, rgba(200, 100, 0, 0.4), rgba(200, 100, 0, 0.7))
 }
 
-#leader {
+.leader {
     position: fixed;
     z-index: 5;
-    top: 0;
-    right: 0;
+    top: 20px;
+    right: 40px;
     color: white;
+    font-style: italic;
+    font-size: 40px;
+    transform: rotate(10deg);
+    -webkit-text-stroke-width: 2px;
+    -webkit-text-stroke-color: lime;
+}
+
+.flash {
+    animation: flash 0.2s linear 5;
 }
 
 #graph {
@@ -70,7 +86,7 @@ body {
     flex-direction: column;
     justify-content: space-around;
     width: 100%;
-    height: 70%;
+    height: 60%;
     /* background-color: blue; */
 }
 
@@ -83,17 +99,57 @@ body {
 .bar {
     position: relative;
     height: 100%;
-    background: linear-gradient(to left, orange, rgba(255, 165, 0, 0.4), rgba(255, 165, 0, 0.2), rgba(255, 165, 0, 0.15), rgba(255, 165, 0, 0.05));
+    /* background: linear-gradient(to left, orange, rgba(255, 165, 0, 0.4), rgba(255, 165, 0, 0.2), rgba(255, 165, 0, 0.15), rgba(255, 165, 0, 0.05)); */
     transition: width 0.3s linear;
     animation: skewer 0.8s linear infinite;
 }
 
-.bar img {
+.bar-wrap:first-of-type .bar {
+    background: linear-gradient(to left, rgba(240, 255, 2, 1), rgba(240, 255, 2, 0.4), rgba(240, 255, 2, 0.2), rgba(240, 255, 2, 0.15), rgba(240, 255, 2, 0.05));
+}
+
+.bar-wrap:nth-of-type(2) .bar {
+    background: linear-gradient(to left, orange, rgba(255, 165, 0, 0.4), rgba(255, 165, 0, 0.2), rgba(255, 165, 0, 0.15), rgba(255, 165, 0, 0.05));
+}
+
+.bar-wrap:nth-of-type(3) .bar {
+    background: linear-gradient(to left, rgba(233, 152, 237, 1), rgba(233, 152, 237, 0.4), rgba(233, 152, 237, 0.2), rgba(233, 152, 237, 0.15), rgba(233, 152, 237, 0.05));
+}
+
+.bar-wrap:last-of-type .bar {
+    background: linear-gradient(to left, rgba(255, 0, 0, 1), rgba(255, 0, 0, 0.4), rgba(255, 0, 0, 0.2), rgba(255, 0, 0, 0.15), rgba(255, 0, 0, 0.05));
+}
+
+.bar-wrap:first-of-type .bar img {
     position: absolute;
-    top: -30px;
-    right: -100px;
+    top: -20px;
+    right: -20px;
     height: 250%;
     transform: rotate(-20deg);
+}
+
+.bar-wrap:nth-of-type(2) .bar img {
+    position: absolute;
+    top: -25px;
+    right: -70px;
+    height: 250%;
+    transform: rotate(-20deg);
+}
+
+.bar-wrap:nth-of-type(3) .bar img {
+    position: absolute;
+    top: -25px;
+    right: -53px;
+    height: 200%;
+    transform: rotate(30deg);
+}
+
+.bar-wrap:last-of-type .bar img {
+    position: absolute;
+    top: -25px;
+    right: -45px;
+    height: 250%;
+    transform: rotate(20deg);
 }
 
 #data {
@@ -102,7 +158,7 @@ body {
     align-items: center;
     position: absolute;
     width: 100%;
-    height: 30%;
+    height: 20%;
     bottom: 0;
     color: white;
     /* background-color: lime; */
@@ -110,52 +166,106 @@ body {
 
 #data div {
     position: relative;
-    /* width: 130px; */
-    /* background-color: lime; */
 }
 
-#data div h2 {
+.statWrap {
     position: absolute;
-    top: -35px;
-    right: -20px;
-    font-size: 35px;
+    width: 90px;
+    /* background-color: blue; */
+}
+
+#dead-boy .statWrap {
+    top: -160px;
+    left: 10px;
+}
+
+#nugget-lord .statWrap {
+    top: -120px;
+    left: 50px;
+}
+
+#prawn-boy .statWrap {
+    top: -150px;
+    left: 50px;
+}
+
+#worm-person .statWrap {
+    top: -180px;
+    left: 10px;
+}
+
+.statWrap div img {
+    width: 30px;
+}
+
+.statWrap div span {
+    margin: 5px;
+    font-size: 20px;
+    font-weight: 800;
+}
+
+#nl-sig{
+    position: absolute;
+    width: 130px;
+    top: 15px;
+    left: -30px;
+    transform: rotate(-10deg);
+}
+
+#pb-sig{
+    position: absolute;
+    width: 140px;
+    top: 70px;
+    left: -30px;
+    transform: rotate(2deg);
+}
+
+/* #data div div {
+    margin-top: 20px;
+} */
+
+#data div h2 {
+    /* position: absolute;
+    top: -210px;
+    right: -80px; */
+    font-size: 40px;
     font-style: italic;
+    -webkit-text-stroke-width: 1px;
+    -webkit-text-stroke-color: lime;
+}
+
+.charImg {
+    position: fixed;
+    z-index: -1;
 }
 
 .dead {
-    position: absolute;
-    z-index: -1;
-    height: 270px;
-    bottom: 0;
-    left: -5%;
+    height: 330px;
+    bottom: -140px;
+    left: -10px;
+    transform: rotate(8deg);
 }
 
 .nugget {
-    position: absolute;
-    z-index: -1;
-    height: 360px;
+    height: 240px;
     bottom: 0;
-    left: 30%;
+    left: 120px;
 }
 
 .prawn {
-    position: absolute;
-    z-index: -1;
-    height: 270px;
+    height: 150px;
     bottom: 0;
-    left: 42%;
+    left: 245px;
 }
 
 .worm {
-    position: absolute;
-    z-index: -1;
-    height: 360px;
+    height: 240px;
     bottom: 0;
     left: 80%;
 }
 
 .winning {
-    animation: winning 0.3s infinite;
+    animation: winning 0.8s infinite;
 }
 
 video {
