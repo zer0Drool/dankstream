@@ -15,7 +15,7 @@ if (location.protocol != 'http:') {
 var socket = io.connect('http://172.20.10.2:8080'); //salazar
 
 //declarations
-var gButtonOne = document.getElementById('g-button-one');
+var saveprawnsButton = document.getElementById('saveprawns');
 var gButtonTwo = document.getElementById('g-button-two');
 
 socket.on('connect', function(data) {
@@ -30,8 +30,9 @@ socket.on('connect', function(data) {
     });
 });
 
-gButtonOne.addEventListener('click', () => {
-    socket.emit('getRekt', {who: 2});
+saveprawns.addEventListener('click', () => {
+    console.log('here');
+    socket.emit('saveprawns');
 });
 
 gButtonTwo.addEventListener('click', () => {

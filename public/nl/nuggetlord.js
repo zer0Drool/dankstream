@@ -122,14 +122,6 @@ var uVizAd = document.getElementById('capita');
 socket.on('connect', () => {
     socket.emit('join', {who: 4});
 
-    socket.on('nuked', data => {
-        console.log(data.who, ' pwns all');
-        document.body.classList.add('pwned');
-        setTimeout(() => {
-            document.body.classList.remove('pwned');
-        }, 2100);
-    });
-
     socket.on('timeForAd', () => {
         uVizAd.classList.add('adTime');
         setTimeout(() => {
@@ -139,11 +131,7 @@ socket.on('connect', () => {
 
     socket.on('disconnect', () => {
         socket.emit('leaving', {who: 4});
-    })
-
-    // tButton.addEventListener('click', () => {
-    //     socket.emit('throwingShade', {who: 8});
-    // });
+    });
 
     name = boyfs[Math.floor(Math.random() * ((boyfs.length - 1) - 0 + 1)) + 0];
 

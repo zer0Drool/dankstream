@@ -31,7 +31,7 @@ var oldLeader = null;
 var newLeader = null;
 
 socket.on('connect', function(data) {
-   socket.emit('join', {who: 'leaderboard'});
+   socket.emit('join', {who: 9});
 
    socket.on('updateScore', (data) => {
        stats = data;

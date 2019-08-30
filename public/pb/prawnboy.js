@@ -1,5 +1,3 @@
-console.log('grant');
-
 // window.onerror = function(msg, url, linenumber) {
 //     alert('FUCKING ERROR - msg ', msg, ' - url ', url, ' - linenumber ', linenumber);
 //     return true;
@@ -21,22 +19,6 @@ var uVizAd = document.getElementById('capita');
 socket.on('connect', function(data) {
    socket.emit('join', {who: 2});
 
-   socket.on('yourRekt', data => {
-       console.log('getting rekt');
-       document.body.classList.add('rekt');
-       setTimeout(() => {
-           document.body.classList.remove('rekt');
-       }, 3100);
-   });
-
-   socket.on('allIsFuked', data => {
-       console.log(data.who, ' pwns all');
-       document.body.classList.add('pwned');
-       setTimeout(() => {
-           document.body.classList.remove('pwned');
-       }, 2100);
-   });
-
    socket.on('timeForAd', () => {
        uVizAd.classList.add('adTime');
        setTimeout(() => {
@@ -46,11 +28,11 @@ socket.on('connect', function(data) {
 
    socket.on('disconnect', () => {
        socket.emit('leaving', {who: 2});
-   })
-});
+   });
 
-tButton.addEventListener('click', () => {
-    socket.emit('throwingShade', {who: 6});
+   socket.on('savethatprawn', () => {
+       getSaved();
+   });
 });
 
 // LOADING
@@ -70,6 +52,13 @@ tooTxt.id = 'too';
 var fullTxt = new Image();
 fullTxt.src = 'pb/assets/full.png';
 fullTxt.id = 'full';
+
+var saveReady = false;
+var prawnLord = new Image();
+prawnLord.src = 'pb/assets/Ebirah2.jpg';
+prawnLord.onload = function() {
+    saveReady = true;
+}
 
 var prawnSrcs = [];
 var prawnObjs = [];
@@ -248,8 +237,9 @@ var foodSettings = {
 }
 
 // FOOD FUNCS
+var foodReadyX = false;
 function foodReady() {
-    setInterval(drawFoods, 35);
+    foodReadyX = true;
 }
 
 function eatmore(data) {
@@ -284,6 +274,8 @@ function foodMove() {
     }
 }
 
+setInterval(drawFoods, 35);
+
 function drawFoods() {
     prawnContext.clearRect(0, 0, foodSettings.w, foodSettings.h);
 
@@ -313,14 +305,16 @@ function drawFoods() {
     }
     prawnContext.drawImage(prawnObjs[whatPrawn], 0, 0, prawnImgInfo[whatPrawn].w, prawnImgInfo[whatPrawn].h, 0 + prawnXvar, ((window.innerHeight - (prawnCanvas.width / ratio)) / 2) + prawnYvar, prawnCanvas.width, prawnCanvas.width / ratio);
 
-    for (var i = 0; i < foodSettings.foodsOnScreen.length; i++) {
-        var food = foodSettings.foodsOnScreen[i];
-        prawnContext.globalAlpha = food.opacity;
-        prawnContext.save();
-        prawnContext.translate(food.x - (food.w * 20), food.y - (food.h * 20));
-        prawnContext.rotate(food.rotato * RAD);
-        prawnContext.drawImage (foodObjs[food.whatFood], food.x + (foodImgInfo[food.whatFood].w / 4), food.y, food.width, food.height);
-        prawnContext.restore();
+    if (foodReadyX) {
+        for (var i = 0; i < foodSettings.foodsOnScreen.length; i++) {
+            var food = foodSettings.foodsOnScreen[i];
+            prawnContext.globalAlpha = food.opacity;
+            prawnContext.save();
+            prawnContext.translate(food.x - (food.w * 20), food.y - (food.h * 20));
+            prawnContext.rotate(food.rotato * RAD);
+            prawnContext.drawImage (foodObjs[food.whatFood], food.x + (foodImgInfo[food.whatFood].w / 4), food.y, food.width, food.height);
+            prawnContext.restore();
+        }
     }
 
     if (isReallySad && tearsReadyX && !tearsPeak) {
@@ -346,6 +340,19 @@ function drawFoods() {
         }
     }
 
+    if (saveReady) {
+        for (var i = 0; i < savedSettings.savesOnScreen.length; i++) {
+            var save = savedSettings.savesOnScreen[i];
+            prawnContext.globalAlpha = save.opacity;
+            prawnContext.save();
+            prawnContext.translate(save.x - (save.w * 20), save.y - (save.h * 20));
+            prawnContext.rotate(save.rotato * RAD);
+            prawnContext.drawImage (prawnLord, save.x + (saveInfo.w / 4), save.y, save.width, save.height);
+            prawnContext.restore();
+        }
+    }
+
+    saveMove()
     foodMove();
 }
 
@@ -378,6 +385,59 @@ function checkIfFed() {
     hasFedInterval = setTimeout(() => {
         hasFed = false;
     }, 2000);
+}
+
+var getSavedTimeout;
+var savedId = 1;
+var savedSettings = {
+    savesOnScreen: [], // an array for all current foods on screen and their properties
+    minScale: 0.8,
+    w: window.innerWidth,
+    h: window.innerHeight
+}
+var saveInfo = {
+    w: 453,
+    h: 240
+}
+
+function saveMore(data) {
+    var scale = (Math.random() * (1.2 - savedSettings.minScale)) + savedSettings.minScale;
+    savedSettings.savesOnScreen.push({
+        id: foodId,
+        x: (window.innerWidth / 2) - (saveInfo.w / 2),
+        y: (window.innerHeight / 2) - (saveInfo.h / 2),
+        ys: Math.random() > 0.5 ? Math.random() : - (Math.random()),
+        xs: Math.random() > 0.5 ? Math.random() : - (Math.random()),
+        height: (scale) * saveInfo.h,
+        width: (scale) * saveInfo.w,
+        rotato: Math.floor(Math.random() * 360) + 1,
+        rotatoDir: Math.random() > 0.5 ? true : false,
+        opacity: 1
+    });
+    foodId++;
+}
+
+function saveMove() {
+    for (var i = 0; i < savedSettings.savesOnScreen.length; i++) {
+        var save = savedSettings.savesOnScreen[i];
+        save.y += save.ys;
+        save.x += save.xs;
+        save.opacity  = save.opacity - 0.05;
+        save.rotato = save.rotatoDir ? save.rotato + 4 : save.rotato - 4;
+        if (save.opacity < 0) {
+            savedSettings.savesOnScreen = savedSettings.savesOnScreen.filter(saveX => saveX.id !== save.id);
+        }
+    }
+}
+
+function getSaved() {
+    if (whatPrawn > 0) {
+        whatPrawn--;
+        foodCounter -= 10;
+    } else {
+        foodCounter = 0;
+    }
+    saveMore();
 }
 
 function reverseCry() {
@@ -440,16 +500,22 @@ function letsfeedThisPrawn(e) {
         // PRAWN ANIM
         foodCounter++;
         if (foodCounter === 10) {
+            socket.emit('prawnPoints', 3);
             whatPrawn = 1;
         } else if (foodCounter === 20) {
+            socket.emit('prawnPoints', 3);
             whatPrawn = 2;
         } else if (foodCounter === 30) {
+            socket.emit('prawnPoints', 3);
             whatPrawn = 3;
         } else if (foodCounter === 40) {
+            socket.emit('prawnPoints', 3);
             whatPrawn = 4;
         } else if (foodCounter === 60) {
+            socket.emit('prawnPoints', 3);
             whatPrawn = 5;
         } else if (foodCounter === 70) {
+            socket.emit('prawnPoints', 30);
             whatPrawn = 6;
             isReallySad = true;
             animateThisShit();
