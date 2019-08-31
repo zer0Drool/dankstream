@@ -47,6 +47,7 @@ var stats = [
 
 var roomsArray = ['james', 'grant', 'tori', 'ian', 'james-m', 'grant-m', 'tori-m', 'ian-m', 'leaderboard', 'die', 'instructions'];
 var areWeDying = false;
+var nuked = false;
 
 io.on('connection', (socket) => {
     socket.on('join', data => {
@@ -128,6 +129,19 @@ io.on('connection', (socket) => {
             }, 1800000)
         };
     });
+
+    // nuke
+
+    socket.on('nuke', (data) => {
+        if (!nuked) {
+            nuked = true;
+            console.log(data.member);
+            io.emit('bombsAway', {member: data.member});
+            setTimeout(() => {
+                nuked = false;
+            }, 8000)
+        }
+    })
 
 });
 

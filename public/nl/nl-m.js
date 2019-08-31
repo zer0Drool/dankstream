@@ -14,6 +14,7 @@ var lucaboiz = document.getElementById('responses')
 var responses = document.getElementsByClassName('response');
 var write = document.getElementById('write');
 var send = document.getElementById('send');
+var nuke = document.getElementById('nuke');
 var textarea = document.getElementsByTagName('textarea')[0];
 var fathoms = [1, 2, 3, `This is where it all began. My creation. My everything.
 I was at Tomorrowland, 2019, absorbed by Lucozade and delicious cheesy corned based
@@ -29,7 +30,8 @@ emblazoned into my motor neurone network- an image that has never left. It was t
 awakening that I had, so, been longing for. I owe Paris everything. Long live the sacred nugget.`, 'boom'];
 
 // var socket = io.connect('http://192.168.1.234:8080'); //ts
-var socket = io.connect('http://172.20.10.2:8080'); //salazar
+// var socket = io.connect('http://172.20.10.2:8080'); //salazar
+var socket = io.connect('http://172.20.10.3:8080'); //tsX
 // var socket = io.connect('http:///172.20.10.3:8080'); //harlesden
 
 messages.style.height = `${window.innerHeight - write.offsetHeight}px`;
@@ -72,4 +74,8 @@ send.addEventListener('click', () => {
         createMessage('Nugget Lord', textarea.value);
         textarea.value = '';
     }
-})
+});
+
+nuke.addEventListener('click', () => {
+    socket.emit('nuke', {member: 'nl'})
+});

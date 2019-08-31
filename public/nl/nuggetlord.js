@@ -18,6 +18,8 @@ bombCanv.height = window.innerHeight;
 var bombCtx = bombCanv.getContext('2d');
 var bubble = document.getElementById('bubble');
 var bubbleImg = document.getElementById('bubbleImg');
+var nuke = document.getElementById('nuke');
+var nukeImg = document.getElementById('nukeImg');
 var textarea = document.getElementsByTagName('textarea')[0];
 // var sounds = [];
 var sounds = document.getElementsByTagName('audio');
@@ -113,7 +115,8 @@ for (var i = 0; i < 50; i++) {
 }
 
 // var socket = io.connect('http://192.168.1.234:8080'); //ts
-var socket = io.connect('http://172.20.10.2:8080'); //salazar
+// var socket = io.connect('http://172.20.10.2:8080'); //salazar
+var socket = io.connect('http://172.20.10.3:8080'); //tsX
 // var socket = io.connect('http:///172.20.10.3:8080'); //harlesden
 
 // var tButton = document.getElementById('t-button');
@@ -132,6 +135,15 @@ socket.on('connect', () => {
     socket.on('disconnect', () => {
         socket.emit('leaving', {who: 4});
     });
+
+    socket.on('bombsAway', (data) => {
+        console.log(data.member);
+        nukeImg.src = `/assets/nukes/${data.member}.png`
+        nuke.style.display = 'flex';
+        setTimeout(() => {
+            nuke.style.display = 'none';
+        }, 5000)
+    })
 
     name = boyfs[Math.floor(Math.random() * ((boyfs.length - 1) - 0 + 1)) + 0];
 

@@ -12,11 +12,14 @@ if (location.protocol != 'http:') {
 // var socket = io.connect('http://192.168.1.226:8080'); //studio
 // var socket = io.connect('http://192.168.4.1:8080'); //ultraPi
 // var socket = io.connect('http://192.168.1.234:8080'); //ts
-var socket = io.connect('http://172.20.10.2:8080'); //salazar
+// var socket = io.connect('http://172.20.10.2:8080'); //salazar
+var socket = io.connect('http://172.20.10.3:8080'); //tsX
 
 //declarations
 // var tButton = document.getElementById('t-button');
 var uVizAd = document.getElementById('capita');
+var nuke = document.getElementById('nuke');
+var nukeImg = document.getElementById('nukeImg');
 
 socket.on('connect', function(data) {
    socket.emit('join', {who: 3});
@@ -44,6 +47,15 @@ socket.on('connect', function(data) {
 
    socket.on('disconnect', () => {
        socket.emit('leaving', {who: 3});
+   })
+
+   socket.on('bombsAway', (data) => {
+       console.log(data.member);
+       nukeImg.src = `/assets/nukes/${data.member}.png`
+       nuke.style.display = 'flex';
+       setTimeout(() => {
+           nuke.style.display = 'none';
+       }, 5000)
    })
 });
 
