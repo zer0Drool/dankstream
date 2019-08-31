@@ -45,7 +45,8 @@ var stats = [
     }
 ]
 
-var roomsArray = ['james', 'grant', 'tori', 'ian', 'james-m', 'grant-m', 'tori-m', 'ian-m', 'leaderboard'];
+var roomsArray = ['james', 'grant', 'tori', 'ian', 'james-m', 'grant-m', 'tori-m', 'ian-m', 'leaderboard', 'die', 'instructions'];
+var areWeDying = false;
 
 io.on('connection', (socket) => {
     socket.on('join', data => {
@@ -106,6 +107,28 @@ io.on('connection', (socket) => {
         socket.to('grant').emit('savethatprawn');
     });
 
+    //JAMES SOCKETS
+
+    socket.on('zing', () => {
+        socket.to('james').emit('lightning');
+        socket.to('die').emit('lightning');
+    });
+
+    socket.on('goAway', (data) => {
+        socket.to('james').emit('fuckOff', data.message);
+    });
+
+    socket.on('die', (data) => {
+        if (!areWeDying) {
+            console.log('time to die');
+            areWeDying = true;
+            socket.to('die').emit('timeToDie');
+            setTimeout(() => {
+                areWeDying = false;
+            }, 1800000)
+        };
+    });
+
 });
 
 function uVizionAdTimer() {
@@ -153,6 +176,10 @@ app.get('/leaderboard', (req, res) => {
 
 app.get('/die', (req, res) => {
     res.sendFile(__dirname + '/die.html');
+});
+
+app.get('/instructions', (req, res) => {
+    res.sendFile(__dirname + '/instructions.html');
 });
 
 app.get('/logscores', (req, res) => {

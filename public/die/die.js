@@ -1,3 +1,42 @@
+if (location.protocol != 'http:') {
+    location.href = 'http:' + window.location.href.substring(window.location.protocol.length);
+}
+
+var die = document.getElementById('die');
+var dieUp = false;
+
+// var socket = io.connect('http://192.168.1.226:8080'); //studio
+// var socket = io.connect('http://192.168.4.1:8080'); //ultraPi
+// var socket = io.connect('http://192.168.1.234:8080'); //ts
+// var socket = io.connect('http://172.20.10.2:8080'); //salazar
+var socket = io.connect('http://172.20.10.4:8080'); //salazarX
+
+socket.on('connect', function(data) {
+   socket.emit('join', {who: 10});
+
+   socket.on('lightning', () => {
+       console.log('lightning');
+       lightningX();
+   })
+
+   socket.on('timeToDie', () => {
+	   console.log('poop');
+	   if (!dieUp) {
+		   	console.log('die die ddie');
+	   		dieUp = true;
+			die.style.display = 'flex';
+			setTimeout(() => {
+				die.style.display = 'none';
+				dieUp = false;
+			}, 300000)
+	   };
+   })
+
+   socket.on('disconnect', () => {
+       socket.emit('leaving', {who: 10});
+   })
+});
+
 // THREE JS =================================================================
 
 var scene = new THREE.Scene();
@@ -63,11 +102,11 @@ function lightningX() {
         lightning = false;
         lLight.intensity = 0.1;
         lightningTrigger = true;
-        setTimeout(lightningX,  (Math.random() * (25000 - 15000) + 15000));
+        // setTimeout(lightningX,  (Math.random() * (25000 - 15000) + 15000));
     }, Math.random() * (2000 - 1200) + 1200);
 }
 
-lightningX();
+// lightningX();
 
 var render = function () {
     requestAnimationFrame( render );

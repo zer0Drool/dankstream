@@ -12,30 +12,38 @@ if (location.protocol != 'http:') {
 // var socket = io.connect('http://192.168.1.226:8080'); //studio
 // var socket = io.connect('http://192.168.4.1:8080'); //ultraPi
 // var socket = io.connect('http://192.168.1.234:8080'); //ts
-var socket = io.connect('http://172.20.10.2:8080'); //salazar
+// var socket = io.connect('http://172.20.10.2:8080'); //salazar
+var socket = io.connect('http://172.20.10.4:8080'); //salazarX
 
 //declarations
 var tButton = document.getElementById('t-button');
 var uVizAd = document.getElementById('capita');
+var goAway = document.getElementById('go-away');
+var whatchaSay = document.getElementById('message');
+var enter = document.getElementById('enter');
+var audio = document.getElementsByTagName('audio')[0];
+var going = false;
 
 socket.on('connect', function(data) {
    socket.emit('join', {who: 1});
 
-   socket.on('yourRekt', data => {
-       console.log('getting rekt');
-       document.body.classList.add('rekt');
-       setTimeout(() => {
-           document.body.classList.remove('rekt');
-       }, 3100);
-   });
+   socket.on('lightning', () => {
+       console.log('lightning');
+       lightningX();
+   })
 
-   socket.on('allIsFuked', data => {
-       console.log(data.who, ' pwns all');
-       document.body.classList.add('pwned');
-       setTimeout(() => {
-           document.body.classList.remove('pwned');
-       }, 2100);
-   });
+   socket.on('fuckOff', (message) => {
+       if (!going) {
+           console.log('fuck off');
+           going = true;
+           whatchaSay.innerText = message;
+           goAway.style.display = 'flex';
+           setTimeout(() => {
+               goAway.style.display = 'none';
+               going = false;
+           }, 2800);
+       }
+   })
 
    socket.on('timeForAd', () => {
        uVizAd.classList.add('adTime');
@@ -49,9 +57,10 @@ socket.on('connect', function(data) {
    })
 });
 
-tButton.addEventListener('click', () => {
-    socket.emit('throwingShade', {who: 5});
-});
+enter.addEventListener('click', () => {
+    enter.style.display = 'none';
+    audio.play();
+})
 
 var scene = new THREE.Scene();
 
@@ -206,6 +215,11 @@ function changeObj() { // change the obj
             deadBoyTheKidCoffin.rotation.y = globalRotation;
             scene.add(deadBoyTheKidCoffin)
         }
+
+        if (envToggle === 2 && objToggle === 2) {
+            console.log('go die');
+            socket.emit('die');
+        }
     }
 }
 
@@ -257,24 +271,30 @@ function changeEnv() {
     }
     floor.material.map = newFTexture;
     wall.material.map = newWTexture;
+    if (envToggle === 2 && objToggle === 2) {
+        console.log('go die');
+        socket.emit('die');
+    }
 }
 
 var lightning = false;
 var lightningTrigger = false;
+var lightningTimeout = false;
 
 function lightningX() {
+    if (lightningTimeout) {
+        clearTimeout(lightningTimeout);
+    }
     lightning = true;
     document.getElementsByTagName('canvas')[0].style.background = 'linear-gradient(black, black)'; // lights out
-    setTimeout(() => {
+    lightningTimeout = setTimeout(() => {
         lightning = false;
         light.intensity = 0.1;
         lightningTrigger = true;
         document.getElementsByTagName('canvas')[0].style.background = 'linear-gradient(black, black, black, purple, red)'; // lights on
-        setTimeout(lightningX,  (Math.random() * (25000 - 15000) + 15000));
+        // setTimeout(lightningX,  (Math.random() * (25000 - 15000) + 15000));
     }, Math.random() * (2000 - 1200) + 1200);
 }
-
-lightningX();
 
 var animate = function () {
     requestAnimationFrame( animate );
