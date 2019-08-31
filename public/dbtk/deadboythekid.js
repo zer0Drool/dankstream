@@ -162,7 +162,7 @@ mtlLoader.load( 'x1.mtl', function( materials ) {
 });
 
 var objToggle = 1; // currently selected obj
-var objMax = 49; // maximum number of objs
+var objMax = 50; // maximum number of objs
 
 var globalRotation; // keeps track of the rotation
 
@@ -173,7 +173,7 @@ function changeObj() { // change the obj
 
     if (deadBoyTheKidCoffin) { // check to see if it exists
 
-        objToggle = objToggle === 49 ? 1 : objToggle + 1; // increments obj toggle
+        objToggle = objToggle === 50 ? 1 : objToggle + 1; // increments obj toggle
 
         globalRotation = deadBoyTheKidCoffin.rotation.y; // assign the current rotation of the obj to global var
 
@@ -216,7 +216,7 @@ function changeObj() { // change the obj
             scene.add(deadBoyTheKidCoffin)
         }
 
-        if (envToggle === 2 && objToggle === 2) {
+        if (envToggle === 13 && objToggle === 39) {
             console.log('go die');
             socket.emit('die');
         }
@@ -249,13 +249,13 @@ function changeSymbol() {
 }
 
 var envToggle = 1;
-var envMax = 33;
+var envMax = 34;
 
 var changeEnvButton = document.getElementById('dQ');
 changeEnvButton.addEventListener('click', changeEnv);
 
 function changeEnv() {
-    envToggle = envToggle === 33 ? 1 : envToggle + 1;
+    envToggle = envToggle === 34 ? 1 : envToggle + 1;
     var newFTexture;
     var newWTexture;
     if (envArray.length < envMax) { // haven't loaded all the textures
@@ -271,7 +271,7 @@ function changeEnv() {
     }
     floor.material.map = newFTexture;
     wall.material.map = newWTexture;
-    if (envToggle === 2 && objToggle === 2) {
+    if (envToggle === 13 && objToggle === 39) {
         console.log('go die');
         socket.emit('die');
     }
