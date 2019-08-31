@@ -127,10 +127,12 @@ socket.on('connect', () => {
 
     socket.on('timeForAd', (data) => {
         uVizAd.src = data.url;
-        uVizAd.classList.add('adTime');
         setTimeout(() => {
-            uVizAd.classList.remove('adTime');
-        }, 6000);
+            uVizAd.classList.add('adTime');
+            setTimeout(() => {
+                uVizAd.classList.remove('adTime');
+            }, 6000);
+        }, 1000)
     });
 
     socket.on('disconnect', () => {

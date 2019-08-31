@@ -49,7 +49,7 @@ var roomsArray = ['james', 'grant', 'tori', 'ian', 'james-m', 'grant-m', 'tori-m
 var areWeDying = false;
 var nuked = false;
 var adCount = 0;
-var adArr = ['/assets/avatarSelecta/uviz.png', '/assets/avatarSelecta/cube.png'];
+var adArr = ['/assets/avatarSelecta/uviz.png', '/assets/avatarSelecta/cube.png', '/assets/avatarSelecta/damndank.png'];
 
 io.on('connection', (socket) => {
     socket.on('join', data => {
@@ -152,7 +152,7 @@ function uVizionAdTimer() {
     adCount = adCount < adArr.length - 1 ? adCount += 1 : 0;
 };
 
-setInterval(uVizionAdTimer, 300000);
+setInterval(uVizionAdTimer, 10000);
 // setInterval(uVizionAdTimer, 10000);
 
 app.get('/deadboythekid', (req, res) => {

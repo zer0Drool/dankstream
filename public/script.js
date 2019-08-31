@@ -29,24 +29,34 @@ var changingAvatar = false;
 // var socket = io.connect('http://192.168.1.226:8080'); //studio
 // var socket = io.connect('http://192.168.4.1:8080'); //ultraPi
 // var socket = io.connect('http://192.168.1.234:8080'); //ts
-var socket = io.connect('http://127.0.0.1:8080'); //local noo wifis
+// var socket = io.connect('http://127.0.0.1:8080'); //local noo wifis
+var socket = io.connect('http://172.20.10.3:8080'); //tsX
 
 socket.on('connect', function(data) {
    socket.emit('join', {who: 'selecta'});
 
-   socket.on('allIsFuked', data => {
-       console.log(data.who, ' pwns all');
-   });
-
-   socket.on('timeForAd', () => {
+   socket.on('timeForAd', (data) => {
        if (assetCount === 4) {
-           console.log('ad time');
-           uVizAd.classList.add('adTime');
+           uVizAd.src = data.url;
            setTimeout(() => {
-               uVizAd.classList.remove('adTime');
-           }, 6000);
+               uVizAd.classList.add('adTime');
+               setTimeout(() => {
+                   uVizAd.classList.remove('adTime');
+               }, 6000);
+           }, 1000)
        }
    });
+
+   socket.on('bombsAway', (data) => {
+       if (assetCount === 4) {
+           console.log(data.member);
+           nukeImg.src = `/assets/nukes/${data.member}.png`
+           nuke.style.display = 'flex';
+           setTimeout(() => {
+               nuke.style.display = 'none';
+           }, 5000)
+       }
+   })
 });
 
 

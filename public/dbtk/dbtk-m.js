@@ -13,13 +13,16 @@ if (location.protocol != 'http:') {
 // var socket = io.connect('http://192.168.4.1:8080'); //ultraPi
 // var socket = io.connect('http://192.168.1.234:8080'); //ts
 // var socket = io.connect('http://172.20.10.2:8080'); //salazar
-var socket = io.connect('http://172.20.10.4:8080'); //salazarX
+// var socket = io.connect('http://172.20.10.4:8080'); //salazarX
+var socket = io.connect('http://172.20.10.3:8080'); //tsX
+
 
 //declarations
 var jButtonOne = document.getElementById('j-button-one');
 var jButtonTwo = document.getElementById('j-button-two');
 var jButtonThree = document.getElementById('j-button-three');
 var jButtonFour = document.getElementById('j-button-four');
+var jButtonFive = document.getElementById('j-button-five');
 
 socket.on('connect', function(data) {
     socket.emit('join', {who: 5});
@@ -51,4 +54,9 @@ jButtonThree.addEventListener('click', () => {
 jButtonFour.addEventListener('click', () => {
     console.log('please leave');
     socket.emit('goAway', {message: 'PLEASE LEAVE'});
+});
+
+jButtonFive.addEventListener('click', () => {
+    console.log('nuke');
+    socket.emit('nuke', {member: 'db'});
 });

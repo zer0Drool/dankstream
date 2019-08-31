@@ -45,15 +45,27 @@ socket.on('connect', function(data) {
        }
    })
 
-   socket.on('timeForAd', () => {
-       uVizAd.classList.add('adTime');
+   socket.on('timeForAd', (data) => {
+       uVizAd.src = data.url;
        setTimeout(() => {
-           uVizAd.classList.remove('adTime');
-       }, 6000);
+           uVizAd.classList.add('adTime');
+           setTimeout(() => {
+               uVizAd.classList.remove('adTime');
+           }, 6000);
+       }, 1000)
    });
 
    socket.on('disconnect', () => {
        socket.emit('leaving', {who: 1});
+   })
+
+   socket.on('bombsAway', (data) => {
+       console.log(data.member);
+       nukeImg.src = `/assets/nukes/${data.member}.png`
+       nuke.style.display = 'flex';
+       setTimeout(() => {
+           nuke.style.display = 'none';
+       }, 5000)
    })
 });
 
