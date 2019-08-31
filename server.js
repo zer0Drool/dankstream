@@ -45,7 +45,7 @@ var stats = [
     }
 ]
 
-var roomsArray = ['james', 'grant', 'tori', 'ian', 'james-m', 'grant-m', 'tori-m', 'ian-m', 'leaderboard', 'die', 'instructions'];
+var roomsArray = ['james', 'grant', 'tori', 'ian', 'james-m', 'grant-m', 'tori-m', 'ian-m', 'leaderboard', 'die', 'instructions', 'screen1'];
 var areWeDying = false;
 var nuked = false;
 var adCount = 0;
@@ -213,6 +213,10 @@ app.get('/die', (req, res) => {
 
 app.get('/instructions', (req, res) => {
     res.sendFile(__dirname + '/instructions.html');
+});
+
+app.get('/screen1', (req, res) => {
+    res.sendFile(__dirname + '/screen1.html');
 });
 
 app.get('/logscores', (req, res) => {
