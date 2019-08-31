@@ -125,7 +125,8 @@ var uVizAd = document.getElementById('capita');
 socket.on('connect', () => {
     socket.emit('join', {who: 4});
 
-    socket.on('timeForAd', () => {
+    socket.on('timeForAd', (data) => {
+        uVizAd.src = data.url;
         uVizAd.classList.add('adTime');
         setTimeout(() => {
             uVizAd.classList.remove('adTime');

@@ -86,7 +86,8 @@ socket.on('connect', function(data) {
        console.log(stats);
    });
 
-   socket.on('timeForAd', () => {
+   socket.on('timeForAd', (data) => {
+       uVizAd.src = data.url;
        uVizAd.classList.add('adTime');
        setTimeout(() => {
            uVizAd.classList.remove('adTime');

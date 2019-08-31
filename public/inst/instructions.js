@@ -25,7 +25,8 @@ var socket = io.connect('http://172.20.10.3:8080'); //tsX
 socket.on('connect', function(data) {
    socket.emit('join', {who: 11});
 
-   socket.on('timeForAd', () => {
+   socket.on('timeForAd', (data) => {
+       uVizAd.src = data.url;
        uVizAd.classList.add('adTime');
        setTimeout(() => {
            uVizAd.classList.remove('adTime');

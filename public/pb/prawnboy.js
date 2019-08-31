@@ -22,7 +22,8 @@ var nukeImg = document.getElementById('nukeImg');
 socket.on('connect', function(data) {
    socket.emit('join', {who: 2});
 
-   socket.on('timeForAd', () => {
+   socket.on('timeForAd', (data) => {
+       uVizAd.src = data.url;
        uVizAd.classList.add('adTime');
        setTimeout(() => {
            uVizAd.classList.remove('adTime');

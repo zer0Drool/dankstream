@@ -48,6 +48,8 @@ var stats = [
 var roomsArray = ['james', 'grant', 'tori', 'ian', 'james-m', 'grant-m', 'tori-m', 'ian-m', 'leaderboard', 'die', 'instructions'];
 var areWeDying = false;
 var nuked = false;
+var adCount = 0;
+var adArr = ['/assets/avatarSelecta/uviz.png', '/assets/avatarSelecta/cube.png'];
 
 io.on('connection', (socket) => {
     socket.on('join', data => {
@@ -146,7 +148,8 @@ io.on('connection', (socket) => {
 });
 
 function uVizionAdTimer() {
-    io.emit('timeForAd');
+    io.emit('timeForAd', {url: adArr[adCount]});
+    adCount = adCount < adArr.length - 1 ? adCount += 1 : 0;
 };
 
 setInterval(uVizionAdTimer, 300000);

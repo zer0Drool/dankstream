@@ -24,21 +24,8 @@ var nukeImg = document.getElementById('nukeImg');
 socket.on('connect', function(data) {
    socket.emit('join', {who: 3});
 
-   socket.on('yourRekt', data => {
-       document.body.classList.add('rekt');
-       setTimeout(() => {
-           document.body.classList.remove('rekt');
-       }, 3100);
-   });
-
-   socket.on('allIsFuked', data => {
-       document.body.classList.add('pwned');
-       setTimeout(() => {
-           document.body.classList.remove('pwned');
-       }, 2100);
-   });
-
-   socket.on('timeForAd', () => {
+   socket.on('timeForAd', (data) => {
+       uVizAd.src = data.url;
        uVizAd.classList.add('adTime');
        setTimeout(() => {
            uVizAd.classList.remove('adTime');
