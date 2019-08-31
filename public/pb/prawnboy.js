@@ -54,11 +54,25 @@ fullTxt.src = 'pb/assets/full.png';
 fullTxt.id = 'full';
 
 var saveReady = false;
-var prawnLord = new Image();
-prawnLord.src = 'pb/assets/Ebirah2.jpg';
-prawnLord.onload = function() {
-    saveReady = true;
+var saveSrcs = [];
+var saveObjs = [];
+var saveLoader = 0;
+var saveLoaded = false;
+
+for (var i = 0; i < 3; i++) {
+    saveSrcs.push(`pb/assets/gX${i + 1}.png`);
+    var saveObj = new Image();
+    saveObj.src = saveSrcs[i];
+    saveObj.onload = function() {
+        saveLoader++;
+        if (saveLoader === 3) {
+            saveReady = true;
+        }
+    }
+    saveObjs.push(saveObj);
 }
+
+///////
 
 var prawnSrcs = [];
 var prawnObjs = [];
@@ -347,7 +361,7 @@ function drawFoods() {
             prawnContext.save();
             prawnContext.translate(save.x - (save.w * 20), save.y - (save.h * 20));
             prawnContext.rotate(save.rotato * RAD);
-            prawnContext.drawImage (prawnLord, save.x + (saveInfo.w / 4), save.y, save.width, save.height);
+            prawnContext.drawImage (saveObjs[save.whatSave], save.x + (saveInfo[save.whatSave].w / 4), save.y, save.width, save.height);
             prawnContext.restore();
         }
     }
@@ -388,33 +402,46 @@ function checkIfFed() {
 }
 
 var getSavedTimeout;
-var savedId = 1;
+var saveId = 1;
 var savedSettings = {
     savesOnScreen: [], // an array for all current foods on screen and their properties
-    minScale: 0.8,
+    minScale: 0.2,
     w: window.innerWidth,
     h: window.innerHeight
 }
-var saveInfo = {
-    w: 453,
-    h: 240
-}
+var saveInfo = [
+    {
+        w: 400,
+        h: 764
+    },
+    {
+        w: 400,
+        h: 1456
+    },
+    {
+        w: 400,
+        h: 1525
+    }
+];
 
 function saveMore(data) {
-    var scale = (Math.random() * (1.2 - savedSettings.minScale)) + savedSettings.minScale;
+    var scale = (Math.random() * (0.5 - savedSettings.minScale)) + savedSettings.minScale;
+    var whatSaveX = Math.floor(Math.random() * 3)
     savedSettings.savesOnScreen.push({
-        id: foodId,
-        x: (window.innerWidth / 2) - (saveInfo.w / 2),
-        y: (window.innerHeight / 2) - (saveInfo.h / 2),
+        id: saveId,
+        x: (window.innerWidth / 2) - (saveInfo[whatSaveX].w / 3),
+        y: (window.innerHeight / 2) - (saveInfo[whatSaveX].h / 5),
         ys: Math.random() > 0.5 ? Math.random() : - (Math.random()),
         xs: Math.random() > 0.5 ? Math.random() : - (Math.random()),
-        height: (scale) * saveInfo.h,
-        width: (scale) * saveInfo.w,
+        height: (scale) * saveInfo[whatSaveX].h,
+        width: (scale) * saveInfo[whatSaveX].w,
         rotato: Math.floor(Math.random() * 360) + 1,
         rotatoDir: Math.random() > 0.5 ? true : false,
-        opacity: 1
+        opacity: 1,
+        whatSave: whatSaveX
     });
-    foodId++;
+    saveId++;
+    console.log(savedSettings.savesOnScreen);
 }
 
 function saveMove() {

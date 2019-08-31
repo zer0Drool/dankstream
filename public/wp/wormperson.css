@@ -35,8 +35,26 @@
     touch-action: manipulation;
 }
 
+@keyframes blowz {
+    0% {transform: scale(1)}
+    50% {transform: scale(1.2)}
+    100% {transform: scale(1)}
+}
+
 h1 {
-    color: red;
+    display: none;
+    pointer-events: none;
+    user-select: none;
+    position: fixed;
+    text-align: center;
+    top: 20px;
+    width: 100vw;
+    margin: 0 auto;
+    color: pink;
+    text-shadow: 1px 1px 1px white;
+    font-size: 1.4em;
+    font-family: "Comic Sans MS", "cursive", "sans-serif";
+    animation: blowz 1s infinite ease-in-out;
 }
 
 html {
@@ -84,6 +102,10 @@ html {
     animation: jiggle 0.5s linear infinite;
 }
 
+.epicJig {
+    animation: jiggle 0.2s linear infinite;
+}
+
 @keyframes blow {
     0% {transform: scaleY(1) scaleX(1);}
     25% {transform: scaleY(1.1) scaleX(1.3);}
@@ -96,10 +118,11 @@ html {
     animation: blow 1.3s ease-in infinite;
 }
 
-#prizeWrap {
+#prizeWrap, #prizeWrapFake {
     position: fixed;
     width: 100vw;
-    height: 100vh;
+    height: 100%;
+    top: 0;
     display: none;
     align-items: center;
     justify-content: center;
@@ -107,27 +130,48 @@ html {
     overflow: hidden;
 }
 
-#claimYourPrize {
+#claimYourPrize, #claimYourPrizeFake {
     position: relative;
     width: 60vw;
-    height: 50%;
+    height: 80%;
     display: flex;
     align-items: center;
     justify-content: center;
 }
 
-#claimYourPrize button {
+#claimYourPrize button, #claimYourPrizeFake button {
     position: absolute;
     height: 100%;
     width: 100%;
     background-color: pink;
     outline: none;
     text-decoration: none;
-    border: 5px hotpink ridge;
+    border: 15px hotpink ridge;
     z-index: 50;
+    color: white;
+    font-size: 1em;
+    font-family: "Comic Sans MS", "cursive", "sans-serif";
 }
 
 #claimYourPrize video {
+    width: 100%;
+    max-height: 100%;
+    margin: 0 auto;
+    z-index: 40;
+    pointer-events: none;
+    user-select: none;
+}
+
+#claimYourPrizeFake img {
+    position: absolute;
+    width: 100%;
+    z-index: 43;
+    pointer-events: none;
+    user-select: none;
+    opacity: 0.5;
+}
+
+#claimYourPrizeFake video {
     width: 100%;
     z-index: 40;
     pointer-events: none;
