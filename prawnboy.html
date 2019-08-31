@@ -7,6 +7,12 @@
         <link rel="stylesheet" href="pb/prawnboy.css">
     </head>
     <body>
+        <div id="retryButtonWrap">
+            <div id="retryButton">
+                tap screen to apologise
+            </div>
+
+        </div>
         <div id="gradBack"></div>
         <div id="top"></div>
         <div id="bottom"></div>
@@ -22,11 +28,16 @@
             <img id="nukeImg">
         </div>
 
-        <audio src="pb/assets/e1.m4a"></audio>
-        <audio src="pb/assets/e2.m4a"></audio>
-        <audio src="pb/assets/e3.m4a"></audio>
-        <audio src="pb/assets/e4.mp3" loop="true"></audio>
-        <audio src="pb/assets/e5.mp3" loop="true"></audio>
+        <audio class="sad" src="pb/assets/sad1.m4a"></audio>
+        <audio class="sad" src="pb/assets/sad2.m4a"></audio>
+        <audio class="sad" src="pb/assets/sad3.m4a"></audio>
+        <audio class="sad" src="pb/assets/sad4.m4a"></audio>
+        <audio class="happy" src="pb/assets/happy1.m4a"></audio>
+        <audio class="happy" src="pb/assets/happy2.m4a"></audio>
+        <audio class="happy" src="pb/assets/happy3.m4a"></audio>
+        <audio class="happy" src="pb/assets/happy4.m4a"></audio>
+        <audio id="ss" src="pb/assets/supersad.m4a" loop="true"></audio>
+        <audio id="sh" src="pb/assets/superhappy.m4a" loop="true"></audio>
         <script src="/socket.io/socket.io.js"></script>
         <script src="pb/prawnboy.js"></script>
     </body>

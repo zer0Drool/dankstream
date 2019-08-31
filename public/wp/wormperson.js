@@ -12,11 +12,12 @@ if (location.protocol != 'http:') {
 // var socket = io.connect('http://192.168.1.226:8080'); //studio
 // var socket = io.connect('http://192.168.4.1:8080'); //ultraPi
 // var socket = io.connect('http://192.168.1.234:8080'); //ts
-// var socket = io.connect('http://172.20.10.2:8080'); //salazar
-var socket = io.connect('http://172.20.10.3:8080'); //tsX
+var socket = io.connect('http://172.20.10.2:8080'); //salazar
+// var socket = io.connect('http://172.20.10.3:8080'); //tsX
+
+var progress = document.getElementById('progress');
 
 //declarations
-// var tButton = document.getElementById('t-button');
 var uVizAd = document.getElementById('capita');
 var nuke = document.getElementById('nuke');
 var nukeImg = document.getElementById('nukeImg');
@@ -47,10 +48,6 @@ socket.on('connect', function(data) {
        }, 5000)
    })
 });
-
-// tButton.addEventListener('click', () => {
-//     socket.emit('throwingShade', {who: 7});
-// });
 
 var candle = document.getElementById('candle');
 var candleOnline = false;
@@ -101,6 +98,7 @@ function candleAbra() {
         }
         candle.style.display = 'none';
         blowFactor = 0;
+        progress.style.width = '0px';
         candleOnline = false;
         candleAbraTimout2 = setTimeout(candleAbra, Math.random() * (2000 - 1000) + 1000)
     }, Math.random() < 0.33 ? Math.random() * (4000 - 3500) + 3500 : Math.random() < 0.33 ? Math.random() * (6000 - 4000) + 3000 : Math.random() * (2000 - 1000) + 1000)
@@ -248,6 +246,8 @@ document.addEventListener('touchend', e => {
     }
     lipsMoving = false;
     side = null;
+    blowFactor = 0;
+    progress.style.width = '0px';
     lipsx.style.display = 'none';
     lips.style.display = 'none';
     lips.style.left = '-350px';
@@ -393,88 +393,57 @@ var animate = function () {
         var candleRect = candle.getBoundingClientRect();
         var lipsRect = lips.getBoundingClientRect();
         var lipsxRect = lipsx.getBoundingClientRect();
-        if (candleRect.right < window.innerWidth / 2) {
-            if (side === 'right') {
-                if (lipsxRect.top > candleRect.top && lipsxRect.bottom < candleRect.bottom) {
-                    if (blowFactor > 100) {
-                        if (candle.classList.contains('jiggler')) {
-                            candle.classList.remove('jiggler');
-                        }
-                        if (!candle.classList.contains('epicJig')) {
-                            candle.classList.add('epicJig');
-                        }
-                    } else {
-                        if (candle.classList.contains('epicJig')) {
-                            candle.classList.remove('epicJig');
-                        }
-                        if (!candle.classList.contains('jiggler')) {
-                            candle.classList.add('jiggler');
-                        }
-                    }
-                    if (!lipsx.classList.contains('blower')) {
-                        lipsx.classList.add('blower');
-                    }
-                    blowFactor++;
-                    if (blowFactor > 200) {
-                        if (Math.random() > 0.5){
-                            blowOut();
-                        } else {
-                            blowBad();
-                        }
-                    }
-                 } else {
-                    if (candle.classList.contains('jiggler')) {
-                        candle.classList.remove('jiggler');
-                    }
-                    if (lipsx.classList.contains('blower')) {
-                        lipsx.classList.remove('blower');
-                    }
-                    blowFactor = 0;
+
+        if ((lipsRect.top > candleRect.top && lipsRect.bottom < candleRect.bottom) || (lipsxRect.top > candleRect.top && lipsxRect.bottom < candleRect.bottom)) {
+            if (blowFactor > 100) {
+                if (candle.classList.contains('jiggler')) {
+                    candle.classList.remove('jiggler');
+                }
+                if (!candle.classList.contains('epicJig')) {
+                    socket.emit('toripoints', 10);
+                    candle.classList.add('epicJig');
+                }
+            } else {
+                if (candle.classList.contains('epicJig')) {
+                    candle.classList.remove('epicJig');
+                }
+                if (!candle.classList.contains('jiggler')) {
+                    candle.classList.add('jiggler');
                 }
             }
-        } else if (candleRect.left >= window.innerWidth / 2){
-            if (side === 'left') {
-                if (lipsRect.top > candleRect.top && lipsRect.bottom < candleRect.bottom) {
-                    if (blowFactor > 100) {
-                        if (candle.classList.contains('jiggler')) {
-                            candle.classList.remove('jiggler');
-                        }
-                        if (!candle.classList.contains('epicJig')) {
-                            candle.classList.add('epicJig');
-                        }
-                    } else {
-                        if (candle.classList.contains('epicJig')) {
-                            candle.classList.remove('epicJig');
-                        }
-                        if (!candle.classList.contains('jiggler')) {
-                            candle.classList.add('jiggler');
-                        }
-                    }
-                    if (!lips.classList.contains('blower')) {
-                        lips.classList.add('blower');
-                    }
-                    blowFactor++;
-                    if (blowFactor > 200) {
-                        if (Math.random() > 0.5){
-                            blowOut();
-                        } else {
-                            blowBad();
-                        }
-                    }
-                 } else {
-                    if (candle.classList.contains('jiggler')) {
-                        candle.classList.remove('jiggler');
-                    }
-                    if (candle.classList.contains('epicJig')) {
-                        candle.classList.remove('epicJig');
-                    }
-                    if (lips.classList.contains('blower')) {
-                        lips.classList.remove('blower');
-                    }
-                    blowFactor = 0;
+            if (!lips.classList.contains('blower')) {
+                lips.classList.add('blower');
+            }
+            if (!lipsx.classList.contains('blower')) {
+                lipsx.classList.add('blower');
+            }
+            blowFactor++;
+            progress.style.width = progress.width + (window.innerWidth / 200) + 'px';
+            if (blowFactor > 200) {
+                if (Math.random() > 0.5){
+                    blowOut();
+                } else {
+                    blowBad();
                 }
             }
+         } else {
+            if (candle.classList.contains('jiggler')) {
+                candle.classList.remove('jiggler');
+            }
+            if (candle.classList.contains('epicJig')) {
+                candle.classList.remove('epicJig');
+            }
+            if (lips.classList.contains('blower')) {
+                lips.classList.remove('blower');
+            }
+            if (lipsx.classList.contains('blower')) {
+                lipsx.classList.remove('blower');
+            }
+            blowFactor = 0;
+            progress.style.width = '0px';
         }
+
+
     }
 
 	controls.update();

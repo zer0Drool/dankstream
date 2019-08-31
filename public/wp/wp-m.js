@@ -12,8 +12,8 @@ if (location.protocol != 'http:') {
 // var socket = io.connect('http://192.168.1.226:8080'); //studio
 // var socket = io.connect('http://192.168.4.1:8080'); //ultraPi
 // var socket = io.connect('http://192.168.1.234:8080'); //ts
-// var socket = io.connect('http://172.20.10.2:8080'); //salazar
-var socket = io.connect('http://172.20.10.3:8080'); //tsX
+var socket = io.connect('http://172.20.10.2:8080'); //salazar
+// var socket = io.connect('http://172.20.10.3:8080'); //tsX
 
 //declarations
 var tButtonTwo = document.getElementById('t-button-two');
@@ -31,5 +31,5 @@ socket.on('connect', function(data) {
 });
 
 tButtonTwo.addEventListener('click', () => {
-    socket.emit('nuke', {member: 'wp'})
+    socket.emit('nuke', {member: 'wp', stats: 2});
 });

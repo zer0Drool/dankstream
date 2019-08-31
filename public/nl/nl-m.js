@@ -30,8 +30,8 @@ emblazoned into my motor neurone network- an image that has never left. It was t
 awakening that I had, so, been longing for. I owe Paris everything. Long live the sacred nugget.`, 'boom'];
 
 // var socket = io.connect('http://192.168.1.234:8080'); //ts
-// var socket = io.connect('http://172.20.10.2:8080'); //salazar
-var socket = io.connect('http://172.20.10.3:8080'); //tsX
+var socket = io.connect('http://172.20.10.2:8080'); //salazar
+// var socket = io.connect('http://172.20.10.3:8080'); //tsX
 // var socket = io.connect('http:///172.20.10.3:8080'); //harlesden
 
 messages.style.height = `${window.innerHeight - write.offsetHeight}px`;
@@ -53,7 +53,6 @@ function createMessage(name, messagex) {
 }
 
 socket.on('connect', () => {
-
     socket.emit('join', {who: 8});
 
     socket.on('getTheMessageNL', data => {
@@ -77,5 +76,5 @@ send.addEventListener('click', () => {
 });
 
 nuke.addEventListener('click', () => {
-    socket.emit('nuke', {member: 'nl'})
+    socket.emit('nuke', {member: 'nl', stats: 3})
 });

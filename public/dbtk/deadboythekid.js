@@ -12,8 +12,8 @@ if (location.protocol != 'http:') {
 // var socket = io.connect('http://192.168.1.226:8080'); //studio
 // var socket = io.connect('http://192.168.4.1:8080'); //ultraPi
 // var socket = io.connect('http://192.168.1.234:8080'); //ts
-// var socket = io.connect('http://172.20.10.2:8080'); //salazar
-var socket = io.connect('http://172.20.10.4:8080'); //salazarX
+var socket = io.connect('http://172.20.10.2:8080'); //salazar
+// var socket = io.connect('http://172.20.10.4:8080'); //salazarX
 
 //declarations
 var tButton = document.getElementById('t-button');
@@ -185,6 +185,8 @@ function changeObj() { // change the obj
 
     if (deadBoyTheKidCoffin) { // check to see if it exists
 
+        socket.emit('jamespoints', 1);
+
         objToggle = objToggle === 50 ? 1 : objToggle + 1; // increments obj toggle
 
         globalRotation = deadBoyTheKidCoffin.rotation.y; // assign the current rotation of the obj to global var
@@ -229,7 +231,6 @@ function changeObj() { // change the obj
         }
 
         if (envToggle === 13 && objToggle === 39) {
-            console.log('go die');
             socket.emit('die');
         }
     }
@@ -251,6 +252,7 @@ changeSymbolButton.addEventListener('click', changeSymbol);
 
 function changeSymbol() {
     if (deadBoyTheKidCoffin) {
+        socket.emit('jamespoints', 1);
         deadBoyTheKidCoffin.traverse(node => {
             if (node instanceof THREE.Mesh && node.name.search('symbol') > -1) {
                 node.material.color.setHex(`0x${arrayOfColours[Math.floor(Math.random() * arrayOfColours.length)]}`); // randomly assign a diffuse colour
@@ -267,6 +269,7 @@ var changeEnvButton = document.getElementById('dQ');
 changeEnvButton.addEventListener('click', changeEnv);
 
 function changeEnv() {
+    socket.emit('jamespoints', 1);
     envToggle = envToggle === 34 ? 1 : envToggle + 1;
     var newFTexture;
     var newWTexture;
@@ -284,7 +287,6 @@ function changeEnv() {
     floor.material.map = newFTexture;
     wall.material.map = newWTexture;
     if (envToggle === 13 && objToggle === 39) {
-        console.log('go die');
         socket.emit('die');
     }
 }

@@ -125,11 +125,24 @@ io.on('connection', (socket) => {
         if (!areWeDying) {
             console.log('time to die');
             areWeDying = true;
+            stats[0].score += 50;
+            socket.to('leaderboard').emit('updateScore', stats);
             socket.to('die').emit('timeToDie');
             setTimeout(() => {
                 areWeDying = false;
             }, 1800000)
         };
+    });
+
+    socket.on('jamespoints', data => {
+        stats[0].score += data;
+        socket.to('leaderboard').emit('updateScore', stats);
+    });
+
+    // tori sockets
+    socket.on('toripoints', data => {
+        stats[2].score += data;
+        socket.to('leaderboard').emit('updateScore', stats);
     });
 
     // nuke
@@ -138,6 +151,9 @@ io.on('connection', (socket) => {
         if (!nuked) {
             nuked = true;
             console.log(data.member);
+            stats[data.stats].score -= 4;
+            ls
+            socket.to('leaderboard').emit('updateScore', stats);
             io.emit('bombsAway', {member: data.member});
             setTimeout(() => {
                 nuked = false;

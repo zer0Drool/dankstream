@@ -10,8 +10,8 @@ if (location.protocol != 'http:') {
 // var socket = io.connect('http://192.168.1.226:8080'); //studio
 // var socket = io.connect('http://192.168.4.1:8080'); //ultraPi
 // var socket = io.connect('http://192.168.1.234:8080'); //ts
-// var socket = io.connect('http://172.20.10.2:8080'); //salazar
-var socket = io.connect('http://172.20.10.3:8080'); //tsX
+var socket = io.connect('http://172.20.10.2:8080'); //salazar
+// var socket = io.connect('http://172.20.10.3:8080'); //tsX
 
 //declarations
 // var tButton = document.getElementById('t-button');
@@ -401,7 +401,11 @@ function animateThisShit() {
     document.getElementById('top').appendChild(tooTxt);
     document.getElementById('bottom').removeChild(document.getElementById('bottom').childNodes[0]);
     document.getElementById('bottom').appendChild(fullTxt);
-    document.getElementsByTagName('audio')[3].play();
+    var audioToPause = document.getElementsByTagName('audio');
+    for (var i = 0; i < audioToPause.length; i++) {
+        audioToPause[i].pause();
+    }
+    document.getElementById('ss').play();
     timeToCryInterval = setInterval(timeToCry, 693);
     cryPrawnInterval = setInterval(cryPrawn, 342);
 }
@@ -482,6 +486,9 @@ function getSaved() {
     saveMore();
 }
 
+var retryButton = document.getElementById('retryButton');
+var retryButtonWrap = document.getElementById('retryButtonWrap');
+
 function reverseCry() {
     if (hasFed === false && whatPrawn > 0 && isReallySad === false) {
         whatPrawn--;
@@ -493,18 +500,26 @@ function reverseCry() {
             window.clearInterval(reverseCryInterval);
         }
         setTimeout(() =>{
-            document.getElementsByTagName('audio')[3].pause();
+            document.getElementById('ss').pause();
         }, 19000);
-        setTimeout(backToTheStart, 20000);
+        // setTimeout(backToTheStart, 20000);
+        setTimeout(() => {
+            retryButtonWrap.style.display = 'flex';
+        }, 20000);
     }
 }
+
+retryButton.addEventListener('click', () => {
+    retryButtonWrap.style.display = 'none';
+    backToTheStart()
+});
 
 reverseCryInterval = setInterval(reverseCry, 3000);
 
 function backToTheStart() {
     goBackTears = true;
     setTimeout(() => {
-        document.getElementsByTagName('audio')[4].play(); // NOT WORKING!!!!!!!
+        document.getElementById('sh').play(); // NOT WORKING!!!!!!!
     }, 100);
     setTimeout(() => {
         window.clearInterval(cryPrawnInterval);
@@ -514,7 +529,7 @@ function backToTheStart() {
         whatPrawn = 0;
         goBackTears = false;
         weIsReversing = false;
-        document.getElementsByTagName('audio')[4].pause();
+        document.getElementById('sh').pause();
         document.getElementById('top').removeChild(document.getElementById('top').childNodes[0]);
         document.getElementById('top').appendChild(feedTxt);
         document.getElementById('bottom').removeChild(document.getElementById('bottom').childNodes[0]);
@@ -527,7 +542,12 @@ function oof() {
     if (oofing) {
         return;
     } else {
-        document.getElementsByTagName('audio')[Math.floor(Math.random() * 3)].play();
+        if (whatPrawn < 3) {
+            document.getElementsByClassName('happy')[Math.floor(Math.random() * 4)].play();
+        } else {
+            document.getElementsByClassName('sad')[Math.floor(Math.random() * 4)].play();
+        }
+
         oofing = true;
         prawnCanvas.classList.add('oof');
         setTimeout(() => {

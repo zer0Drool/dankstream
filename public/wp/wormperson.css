@@ -89,6 +89,15 @@ html {
     width: 30px;
 }
 
+#progress {
+    position: fixed;
+    pointer-events: none;
+    user-select: none;
+    bottom: 0;
+    left: 0;
+    height: 70px;
+    width: 0px;
+}
 
 @keyframes jiggle {
     0% {opacity: 1}
@@ -126,7 +135,7 @@ html {
     display: none;
     align-items: center;
     justify-content: center;
-    z-index: 30;
+    z-index: 13;
     overflow: hidden;
 }
 
@@ -147,7 +156,7 @@ html {
     outline: none;
     text-decoration: none;
     border: 15px hotpink ridge;
-    z-index: 50;
+    z-index: 20;
     color: white;
     font-size: 1em;
     font-family: "Comic Sans MS", "cursive", "sans-serif";
@@ -157,7 +166,7 @@ html {
     width: 100%;
     max-height: 100%;
     margin: 0 auto;
-    z-index: 40;
+    z-index: 15;
     pointer-events: none;
     user-select: none;
 }
@@ -165,7 +174,7 @@ html {
 #claimYourPrizeFake img {
     position: absolute;
     width: 100%;
-    z-index: 43;
+    z-index: 16;
     pointer-events: none;
     user-select: none;
     opacity: 0.5;
@@ -173,7 +182,7 @@ html {
 
 #claimYourPrizeFake video {
     width: 100%;
-    z-index: 40;
+    z-index: 15;
     pointer-events: none;
     user-select: none;
 }
@@ -189,7 +198,7 @@ html {
     display: flex;
     justify-content: center;
     align-items: center;
-    z-index: 10;;
+    z-index: 30;
 }
 
 #uVizionAd div {
