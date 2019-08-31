@@ -12,11 +12,14 @@ if (location.protocol != 'http:') {
 // var socket = io.connect('http://192.168.1.226:8080'); //studio
 // var socket = io.connect('http://192.168.4.1:8080'); //ultraPi
 // var socket = io.connect('http://192.168.1.234:8080'); //ts
-var socket = io.connect('http://172.20.10.2:8080'); //salazar
+// var socket = io.connect('http://172.20.10.2:8080'); //salazar
+var socket = io.connect('http://172.20.10.4:8080'); //salazarX
 
 //declarations
 var jButtonOne = document.getElementById('j-button-one');
 var jButtonTwo = document.getElementById('j-button-two');
+var jButtonThree = document.getElementById('j-button-three');
+var jButtonFour = document.getElementById('j-button-four');
 
 socket.on('connect', function(data) {
     socket.emit('join', {who: 5});
@@ -31,9 +34,21 @@ socket.on('connect', function(data) {
 });
 
 jButtonOne.addEventListener('click', () => {
-    socket.emit('getRekt', {who: 0});
+    console.log('zing');
+    socket.emit('zing');
 });
 
 jButtonTwo.addEventListener('click', () => {
-    socket.emit('fuckYouAll', {who: 0});
+    console.log('go away');
+    socket.emit('goAway', {message: 'GO AWAY'});
+});
+
+jButtonThree.addEventListener('click', () => {
+    console.log('get out');
+    socket.emit('goAway', {message: 'GET OUT'});
+});
+
+jButtonFour.addEventListener('click', () => {
+    console.log('please leave');
+    socket.emit('goAway', {message: 'PLEASE LEAVE'});
 });
