@@ -51,7 +51,7 @@ socket.on('connect', function(data) {
    socket.emit('join', {who: 'selecta'});
 
    socket.on('timeForAd', (data) => {
-       if (assetCount === 4) {
+       // if (assetCount === 4) {
            uVizAd.src = data.url;
            setTimeout(() => {
                uVizAd.classList.add('adTime');
@@ -59,18 +59,18 @@ socket.on('connect', function(data) {
                    uVizAd.classList.remove('adTime');
                }, 6000);
            }, 1000)
-       }
+       // }
    });
 
    socket.on('bombsAway', (data) => {
-       if (assetCount === 4) {
+       // if (assetCount === 4) {
            console.log(data.member);
            nukeImg.src = `/assets/nukes/${data.member}.png`
            nuke.style.display = 'flex';
            setTimeout(() => {
                nuke.style.display = 'none';
            }, 5000)
-       }
+       // }
    })
 });
 
