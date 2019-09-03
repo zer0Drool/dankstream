@@ -65,9 +65,16 @@ var ctx = canvas.getContext('2d');
 canvas.width = window.innerWidth;
 canvas.height = window.innerHeight;
 
+var drawCount = 0;
+
 function wtfStream() {
     setInterval(() => {
         var wtfRANDO = Math.floor(Math.random() * 841);
         ctx.drawImage(wtfObjs[wtfRANDO], 0, 0, wtfObjs[wtfRANDO].naturalWidth, wtfObjs[wtfRANDO].naturalHeight, Math.random() * (canvas.width - (-200)) + (-200), Math.random() * (canvas.height - (-200)) + (-200), wtfObjs[wtfCount].naturalHeight / 4, wtfObjs[wtfCount].naturalHeight / 4);
+        drawCount += 1;
+        if (drawCount === 100) {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            drawCount = 0;
+        }
     }, 300);
 }
