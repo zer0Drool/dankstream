@@ -152,7 +152,6 @@ io.on('connection', (socket) => {
             nuked = true;
             console.log(data.member);
             stats[data.stats].score -= 4;
-            ls
             socket.to('leaderboard').emit('updateScore', stats);
             io.emit('bombsAway', {member: data.member});
             setTimeout(() => {
@@ -168,8 +167,8 @@ function uVizionAdTimer() {
     adCount = adCount < adArr.length - 1 ? adCount += 1 : 0;
 };
 
-setInterval(uVizionAdTimer, 10000);
 // setInterval(uVizionAdTimer, 10000);
+setInterval(uVizionAdTimer, 60000);
 
 app.get('/deadboythekid', (req, res) => {
     res.sendFile(__dirname + '/deadboythekid.html');

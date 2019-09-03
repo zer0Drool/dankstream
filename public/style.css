@@ -139,6 +139,35 @@ canvas {
     transition: left 0.4s linear;
 }
 
+#avatars {
+    position: fixed;
+    width: 100vw;
+    height: 100%;
+    bottom: 0;
+    left: 0;
+}
+
+#avatars img {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    opacity: 0;
+    min-width: 80vw;
+    max-width: 90vw;
+    transition: opacity 1.5s;
+}
+
+#avatars img:first-of-type {
+    width: 60vw;
+    transform: rotate(-10deg);
+    bottom: -300px;
+}
+
+#avatars img:nth-child(2) {
+    width: 100vw;
+    max-width: 100vw;
+}
+
 #avatarHeads {
     position: fixed;
     bottom: 0;

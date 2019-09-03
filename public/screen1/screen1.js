@@ -68,5 +68,5 @@ function wtfStream() {
     setInterval(() => {
         var wtfRANDO = Math.floor(Math.random() * 1113);
         ctx.drawImage(wtfObjs[wtfRANDO], 0, 0, wtfObjs[wtfRANDO].naturalWidth, wtfObjs[wtfRANDO].naturalHeight, Math.random() * (canvas.width - (-200)) + (-200), Math.random() * (canvas.height - (-200)) + (-200), wtfObjs[wtfCount].naturalHeight / 4, wtfObjs[wtfCount].naturalHeight / 4);
-    }, 40);
+    }, 300);
 }

@@ -36,6 +36,7 @@ socket.on('connect', function(data) {
 
    socket.on('updateScore', (data) => {
        stats = data;
+       console.log(data);
        totalScore = stats[0].score + stats[1].score + stats[2].score + stats[3].score;
 
        var chaPos = [];
@@ -49,6 +50,7 @@ socket.on('connect', function(data) {
            chaPos.push(posObj);
 
            // hits[i].innerText = stats[i].hits;
+           console.log('viewrs', viewers, 'scores', scores)
            viewers[i].innerText = stats[i].viewers;
            scores[i].innerText = Math.floor(stats[i].score);
            var scorePerc = (stats[i].score / totalScore) * 100;
