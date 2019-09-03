@@ -114,8 +114,8 @@ for (var i = 0; i < 50; i++) {
     parisObjs.push(parisObj);
 }
 
-// var socket = io.connect('https://dankstream.herokuapp.com/'); //online
-var socket = io.connect('http://192.168.1.234:8080'); //ts
+var socket = io.connect('https://dankstream.herokuapp.com/'); //online
+// var socket = io.connect('http://192.168.1.234:8080'); //ts
 // var socket = io.connect('http://172.20.10.2:8080'); //salazar
 // var socket = io.connect('http://192.168.1.226:8080'); //gibson
 // var socket = io.connect('http://192.168.4.1:8080'); //ultraPi

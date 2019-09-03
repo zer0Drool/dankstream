@@ -81,3 +81,13 @@ send.addEventListener('click', () => {
 nuke.addEventListener('click', () => {
     socket.emit('nuke', {member: 'nl', stats: 3})
 });
+
+if (window.location.href.search('8080') === -1) {
+    axios.get('/getMessages').then(resp => {
+        console.log(resp.data.messages);
+        var messArr = resp.data.messages.reverse();
+        for (var i = 0; i < messArr.length; i++) {
+            createMessage(messArr[i].sender, messArr[i].message);
+        }
+    })
+}
