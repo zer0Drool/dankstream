@@ -5,7 +5,8 @@ if (location.protocol != 'http:') {
 var die = document.getElementById('die');
 var dieUp = false;
 
-var socket = io.connect('http://192.168.1.226:8080'); //studio
+var socket = io.connect('https://dankstream.herokuapp.com/'); //online
+// var socket = io.connect('http://192.168.1.226:8080'); //studio
 // var socket = io.connect('http://192.168.4.1:8080'); //ultraPi
 // var socket = io.connect('http://172.20.10.3:8080'); //tsX
 // var socket = io.connect('http://192.168.1.234:8080'); //ts

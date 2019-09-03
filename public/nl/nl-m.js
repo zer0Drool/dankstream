@@ -29,9 +29,10 @@ mind. It just made sense. An image of orange, of mutant, of nugget, of Wotsit be
 emblazoned into my motor neurone network- an image that has never left. It was the spiritual
 awakening that I had, so, been longing for. I owe Paris everything. Long live the sacred nugget.`, 'boom'];
 
+var socket = io.connect('https://dankstream.herokuapp.com/'); //online
 // var socket = io.connect('http://192.168.1.234:8080'); //ts
 // var socket = io.connect('http://172.20.10.2:8080'); //salazar
-var socket = io.connect('http://192.168.1.226:8080'); //gibson
+// var socket = io.connect('http://192.168.1.226:8080'); //gibson
 // var socket = io.connect('http://192.168.4.1:8080'); //ultraPi
 // var socket = io.connect('http://172.20.10.3:8080'); //tsX
 // var socket = io.connect('http:///172.20.10.3:8080'); //harlesden
