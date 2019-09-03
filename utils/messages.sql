@@ -1,0 +1,8 @@
+DROP TABLE IF EXISTS messages;
+
+CREATE TABLE messages (
+    id SERIAL PRIMARY KEY,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    sender VARCHAR,
+    message VARCHAR
+);

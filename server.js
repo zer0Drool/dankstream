@@ -1,12 +1,17 @@
 const express = require('express');
 const app = express();
 
+const device = require('express-device');
+app.use(device.capture());
+
 const server = require('http').Server(app);
 const io = require('socket.io')(server);
 
 const bodyParser = require('body-parser');
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: false}));
+
+const db = require('./db.js');
 
 app.use(express.static('./public'));
 
@@ -87,6 +92,7 @@ io.on('connection', (socket) => {
     // IAN SOCKETS
 
     socket.on('newMessageNL', data => {
+        console.log('message');
         var info = {
             name: data.name,
             message: data.message
@@ -97,6 +103,12 @@ io.on('connection', (socket) => {
         }
         socket.to('ian').emit('getTheMessageNL', info);
         socket.to('ian-m').emit('getTheMessageNL', info);
+
+        // if (process.env) {
+            db.addMessage(info).then(result => {
+                result ? console.log('message added') : console.log('failed to add message');
+            })
+        // }
     });
 
     // GRANT SOCKETS
@@ -171,35 +183,74 @@ function uVizionAdTimer() {
 setInterval(uVizionAdTimer, 60000);
 
 app.get('/deadboythekid', (req, res) => {
-    res.sendFile(__dirname + '/deadboythekid.html');
+    if (req.device.type === 'phone') {
+        res.sendFile(__dirname + '/deadboythekid.html');
+    } else {
+        res.send('mobile only plzz n fanx');
+    }
 });
 
 app.get('/wormperson', (req, res) => {
-    res.sendFile(__dirname + '/wormperson.html');
+    if (req.device.type === 'phone') {
+        res.sendFile(__dirname + '/wormperson.html');
+    } else {
+        res.send('mobile only plzz n fanx');
+    }
 });
 
 app.get('/prawnboy', (req, res) => {
-    res.sendFile(__dirname + '/prawnboy.html');
+    if (req.device.type === 'phone') {
+        res.sendFile(__dirname + '/prawnboy.html');
+    } else {
+        res.send('mobile only plzz n fanx');
+    }
 });
 
 app.get('/nuggetlord', (req, res) => {
-    res.sendFile(__dirname + '/nuggetlord.html');
+    if (req.device.type === 'phone') {
+        res.sendFile(__dirname + '/nuggetlord.html');
+    } else {
+        res.send('mobile only plzz n fanx');
+    }
 });
 
+app.get('/getMessages', (req, res) => {
+    db.getMessages().then(result => {
+        console.log('RESULT IN SERVER', result);
+        result ? res.json({success: true, messages: result}) : res.json({success: false});
+    })
+})
+
 app.get('/dbtk-m', (req, res) => {
-    res.sendFile(__dirname + '/dbtk-m.html');
+    if (req.device.type === 'phone') {
+        res.sendFile(__dirname + '/dbtk-m.html');
+    } else {
+        res.send('mobile only plzz n fanx');
+    }
 });
 
 app.get('/wp-m', (req, res) => {
-    res.sendFile(__dirname + '/wp-m.html');
+    if (req.device.type === 'phone') {
+        res.sendFile(__dirname + '/wp-m.html');
+    } else {
+        res.send('mobile only plzz n fanx');
+    }
 });
 
 app.get('/pb-m', (req, res) => {
-    res.sendFile(__dirname + '/pb-m.html');
+    if (req.device.type === 'phone') {
+        res.sendFile(__dirname + '/pb-m.html');
+    } else {
+        res.send('mobile only plzz n fanx');
+    }
 });
 
 app.get('/nl-m', (req, res) => {
-    res.sendFile(__dirname + '/nl-m.html');
+    if (req.device.type === 'phone') {
+        res.sendFile(__dirname + '/nl-m.html');
+    } else {
+        res.send('mobile only plzz n fanx');
+    }
 });
 
 app.get('/leaderboard', (req, res) => {
@@ -224,7 +275,11 @@ app.get('/logscores', (req, res) => {
 });
 
 app.get('/', (req, res) => {
-    res.sendFile(__dirname + '/index.html');
+    if (req.device.type === 'phone') {
+        res.sendFile(__dirname + '/index.html');
+    } else {
+        res.send('mobile only plzz n fanx');
+    }
 });
 
 app.get('*', (req, res) => {
