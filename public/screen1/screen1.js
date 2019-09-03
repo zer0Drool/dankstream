@@ -8,14 +8,14 @@ var wtfObjs = [];
 var wtfLoader = 0;
 var wtfLoaded = false;
 
-for (var i = 0; i < 1113; i++) {
+for (var i = 0; i < 841; i++) {
     wtfSrcs.push(`/megaBatch/wtf${i + 1}.jpeg`);
     var wtfObj = new Image();
     wtfObj.src = wtfSrcs[i];
     wtfObj.onload = function() {
         wtfLoader++;
         console.log(wtfLoader);
-        if (wtfLoader === 1113) {
+        if (wtfLoader === 841) {
             wtfLoaded = true;
             console.log('OMG!!!!',  wtfObjs.length);
             // ctx.drawImage(wtfObjs[2], 0, 0, wtfObjs[wtfCount].naturalWidth, wtfObjs[wtfCount].naturalHeight, Math.random() * ((canvas.width - 100) - 0) + 0, Math.random() * ((canvas.height - 100) - 0) + 0, wtfObjs[wtfCount].naturalHeight / 20, wtfObjs[wtfCount].naturalHeight / 20);
@@ -67,7 +67,7 @@ canvas.height = window.innerHeight;
 
 function wtfStream() {
     setInterval(() => {
-        var wtfRANDO = Math.floor(Math.random() * 1113);
+        var wtfRANDO = Math.floor(Math.random() * 841);
         ctx.drawImage(wtfObjs[wtfRANDO], 0, 0, wtfObjs[wtfRANDO].naturalWidth, wtfObjs[wtfRANDO].naturalHeight, Math.random() * (canvas.width - (-200)) + (-200), Math.random() * (canvas.height - (-200)) + (-200), wtfObjs[wtfCount].naturalHeight / 4, wtfObjs[wtfCount].naturalHeight / 4);
     }, 300);
 }
