@@ -116,7 +116,7 @@ function changeAvatar(who) {
 function enterStream() {
     console.log(`entering ${currentlySelected.name}'s stream!'`);
     setTimeout(() => {
-        window.location.href = `https://dankstream.herokuapp.com//${currentlySelected.name}`; // gibson
+        window.location.href = `https://dankstream.herokuapp.com/${currentlySelected.name}`; // gibson
         // window.location.href = `http://192.168.4.1:8080/${currentlySelected.name}`; //ultraPi
         // window.location.href = `http://172.20.10.2:8080/${currentlySelected.name}`; //tsx
         // window.location.href = `http://192.168.1.234:8080/${currentlySelected.name}`; //ts
