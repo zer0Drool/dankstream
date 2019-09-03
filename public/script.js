@@ -39,11 +39,11 @@ go();
 
 // SOCKETS ===============================================================
 
-// var socket = io.connect('http://192.168.1.226:8080'); //studio
+var socket = io.connect('http://192.168.1.226:8080'); //studio
 // var socket = io.connect('http://192.168.4.1:8080'); //ultraPi
 // var socket = io.connect('http://192.168.1.234:8080'); //ts
 // var socket = io.connect('http://127.0.0.1:8080'); //local noo wifis
-var socket = io.connect('http://172.20.10.2:8080'); //tsX
+// var socket = io.connect('http://172.20.10.2:8080'); //tsX
 // var socket = io.connect('http://172.20.10.2:8080'); //salazar
 
 socket.on('connect', function(data) {
@@ -115,9 +115,9 @@ function changeAvatar(who) {
 function enterStream() {
     console.log(`entering ${currentlySelected.name}'s stream!'`);
     setTimeout(() => {
-        // window.location.href = `http://192.168.1.226:8080/${currentlySelected.name}`; // gibson
+        window.location.href = `http://192.168.1.226:8080/${currentlySelected.name}`; // gibson
         // window.location.href = `http://192.168.4.1:8080/${currentlySelected.name}`; //ultraPi
-        window.location.href = `http://172.20.10.2:8080/${currentlySelected.name}`; //tsx
+        // window.location.href = `http://172.20.10.2:8080/${currentlySelected.name}`; //tsx
         // window.location.href = `http://192.168.1.234:8080/${currentlySelected.name}`; //ts
         // window.location.href = `http://172.20.10.2:8080/${currentlySelected.name}`; //salazar
         // window.location.href = `http://localhost:8080/${currentlySelected.name}`; //ts

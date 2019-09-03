@@ -15,10 +15,10 @@ var ctx = canvas.getContext('2d');
 canvas.width = window.innerWidth * 1.2;
 canvas.height = window.innerHeight * 0.8;
 
-// var socket = io.connect('http://192.168.1.226:8080'); //studio
+var socket = io.connect('http://192.168.1.226:8080'); //studio
 // var socket = io.connect('http://192.168.4.1:8080'); //ultraPi
 // var socket = io.connect('http://192.168.1.234:8080'); //ts
-var socket = io.connect('http://172.20.10.2:8080'); //salazar
+// var socket = io.connect('http://172.20.10.2:8080'); //salazar
 // var socket = io.connect('http://172.20.10.4:8080'); //salazarX
 // var socket = io.connect('http://172.20.10.3:8080'); //tsX
 

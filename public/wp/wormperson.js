@@ -9,10 +9,10 @@ if (location.protocol != 'http:') {
     location.href = 'http:' + window.location.href.substring(window.location.protocol.length);
 }
 
-// var socket = io.connect('http://192.168.1.226:8080'); //studio
+var socket = io.connect('http://192.168.1.226:8080'); //studio
 // var socket = io.connect('http://192.168.4.1:8080'); //ultraPi
 // var socket = io.connect('http://192.168.1.234:8080'); //ts
-var socket = io.connect('http://172.20.10.2:8080'); //salazar
+// var socket = io.connect('http://172.20.10.2:8080'); //salazar
 // var socket = io.connect('http://172.20.10.3:8080'); //tsX
 
 var progress = document.getElementById('progress');
@@ -101,7 +101,7 @@ function candleAbra() {
         progress.style.width = '0px';
         candleOnline = false;
         candleAbraTimout2 = setTimeout(candleAbra, Math.random() * (2000 - 1000) + 1000)
-    }, Math.random() < 0.33 ? Math.random() * (4000 - 3500) + 3500 : Math.random() < 0.33 ? Math.random() * (6000 - 4000) + 3000 : Math.random() * (2000 - 1000) + 1000)
+    }, Math.random() < 0.43 ? Math.random() * (5000 - 4500) + 4500 : Math.random() < 0.33 ? Math.random() * (6000 - 5000) + 5000 : Math.random() * (3000 - 2000) + 2000)
 }
 
 setTimeout(candleAbra, 2000);
@@ -417,8 +417,8 @@ var animate = function () {
             if (!lipsx.classList.contains('blower')) {
                 lipsx.classList.add('blower');
             }
-            blowFactor++;
-            progress.style.width = progress.width + (window.innerWidth / 200) + 'px';
+            blowFactor += 1.1;
+            progress.style.width = progress.width + (window.innerWidth / 182) + 'px';
             if (blowFactor > 200) {
                 if (Math.random() > 0.5){
                     blowOut();
